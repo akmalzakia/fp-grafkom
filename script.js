@@ -1,10 +1,8 @@
 import * as THREE from './three/three.module.js'
 import { OrbitControls } from './three/controls/OrbitControls.js'
-import { EXRLoader } from './three/loaders/EXRLoader.js'
 import * as dat from './three/dat.gui.module.js'
-import { GLTFLoader } from './three/loaders/GLTFLoader.js'
-import { FlakesTexture } from './three/textures/FlakesTexture.js'
-import { RGBELoader } from './three/loaders/RGBELoader.js'
+import { Plane } from './Plane.js'
+import { BasicEnemy } from './BasicEnemy.js'
 
 // Canvas
 const canvas = document.querySelector('canvas.webgl')
@@ -24,39 +22,11 @@ const gridSpace = new THREE.Object3D();
 gridSpace.position.set(-(gridSize/2) + (gridSquare/2), 0,  - (gridSize/2) + (gridSquare/2));
 scene.add(gridSpace);
 
-// Objects
-const objects = []
-const baseSize = 0.9
-const boxSize = baseSize * gridSquare
-const boxGeometry = new THREE.BoxGeometry(boxSize, boxSize, boxSize);
-
 function indexToCoordinates(index){
     const x = index % gridDivisions * gridSquare;
     const z = Math.floor(index / gridDivisions) * gridSquare;
     return new THREE.Vector2(x, z);
 }
-
-function loadGLTF(url, scale, position){
-    const loader = new GLTFLoader();
-    let returnScene = new THREE.Object3D();
-    loader.load(
-        url,
-        (gltf) => {
-            gltf.scene.scale.set(scale.x, scale.y, scale.z);
-            gltf.scene.position.set(position.x, 0, position.y);
-            returnScene.copy(gltf.scene, true);
-            // scene.add(returnScene);
-        },
-        (xhr) => {
-            console.log((xhr.loaded / xhr.total * 100) + '%loaded');
-        },
-        (error) => {
-            console.log('An error happened');
-        }
-    )
-
-    return returnScene;
-};
 
 //kurang, masi salah kalo griddivision != gridsize
 function coordinatesToIndex(coord){
@@ -80,7 +50,6 @@ function isCollide(box1, box2){
 
     return false;
 }
-
 
 // Lights
 
@@ -120,7 +89,7 @@ window.addEventListener('resize', () =>
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
 camera.position.x = 0
 camera.position.y = 7
-camera.position.z = 7
+camera.position.z = -7
 scene.add(camera)
 
 // Controls
@@ -140,22 +109,105 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
  * Animate
  */
 
-const planeScale = new THREE.Vector3(0.001, 0.001, 0.001);
-let plane = loadGLTF('assets/cartoon_plane/scene.gltf', planeScale, indexToCoordinates(0));
-gridSpace.add(plane);
+const manager = new THREE.LoadingManager();
+manager.onStart = function ( url, itemsLoaded, itemsTotal ) {
+
+	console.log( 'Started loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.' );
+
+};
+
+manager.onLoad = function ( ) {
+
+	console.log( 'Loading complete!');
+
+};
+
+manager.onProgress = function ( url, itemsLoaded, itemsTotal ) {
+
+	console.log( 'Loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.' );
+
+};
+
+manager.onError = function ( url ) {
+
+	console.log( 'There was an error loading ' + url );
+
+};
+
+const plane = new Plane(gridSpace, indexToCoordinates(5), manager);
+plane.initializeModel();
+
+for( let i = gridSize * gridSize - 1; i > gridSize * (gridSize - 2) - 1; i--){
+    const enemy = new BasicEnemy(gridSpace, indexToCoordinates(i), manager);
+    enemy.initializeModel();
+}
 
 
-const enemyScale = new THREE.Vector3(0.8, 0.8, 0.8);
-const enemy = loadGLTF('assets/invader_5/scene.gltf', enemyScale, indexToCoordinates(11));
-gridSpace.add(enemy);
+// Game Controls
 
- 
+const key_press = {
+    ArrowLeft: false,
+    ArrowUp: false,
+    ArrowRight: false,
+    ArrowDown: false,
+}
+
+
+window.addEventListener('keydown', onKeyDown);
+window.addEventListener('keyup', onKeyUp);
+/**
+ * 
+ * @param {KeyboardEvent} e 
+ */
+
+function onKeyDown(e){
+    if(e.code in key_press){
+        if(e.code === "ArrowLeft"){
+            key_press.ArrowLeft = true;
+        }
+        else if(e.code === "ArrowUp"){
+            key_press.ArrowUp = true;
+        }
+        else if(e.code === "ArrowRight"){
+            key_press.ArrowRight = true;
+        }
+        else if(e.code === "ArrowDown"){
+            key_press.ArrowDown = true;
+        }
+    }
+}
+
+/**
+ * 
+ * @param {KeyboardEvent} e 
+ */
+
+function onKeyUp(e){
+    if(e.code in key_press){
+        if(e.code === "ArrowLeft"){
+            key_press.ArrowLeft = false;
+        }
+        if(e.code === "ArrowUp"){
+            key_press.ArrowUp = false;
+        }
+        if(e.code === "ArrowRight"){
+            key_press.ArrowRight = false;
+        }
+        if(e.code === "ArrowDown"){
+            key_press.ArrowDown = false;
+        }
+    }
+}
+
 
 const clock = new THREE.Clock()
+let delta = 0;
+let lastTime = clock.getElapsedTime();
 const tick = () =>
 {
 
     const elapsedTime = clock.getElapsedTime()
+    delta = elapsedTime - lastTime;
 
     // Update Orbital Controls
     controls.update()
@@ -163,8 +215,11 @@ const tick = () =>
     // Render
     renderer.render(scene, camera)
 
+    plane.move(key_press, delta);
+
     // Call tick again on the next frame
     window.requestAnimationFrame(tick)
+    lastTime = elapsedTime;
 
 }
 
