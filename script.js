@@ -4,6 +4,7 @@ import * as dat from './three/dat.gui.module.js'
 import { Plane } from './Plane.js'
 import { BasicEnemy } from './BasicEnemy.js'
 
+
 // Canvas
 const canvas = document.querySelector('canvas.webgl')
 
@@ -51,6 +52,9 @@ function isCollide(box1, box2){
     return false;
 }
 
+
+// 
+
 // Lights
 
 const skyColor = 0xB1E1FF;
@@ -58,6 +62,22 @@ const groundColor = 0xB97A20;
 const intensity = 1;
 const light = new THREE.HemisphereLight(skyColor, groundColor, intensity);
 scene.add(light);
+
+
+/**
+ * Panorama 
+ */
+ const panorama = new THREE.CubeTextureLoader();
+ const space = panorama.load([
+   'assets/spacemap/px.png',
+   'assets/spacemap/nx.png',
+   'assets/spacemap/py.png',
+   'assets/spacemap/ny.png',
+   'assets/spacemap/pz.png',
+   'assets/spacemap/nz.png',
+ 
+ ]);
+ scene.background = space;
 
 /**
  * Sizes
@@ -95,6 +115,7 @@ scene.add(camera)
 // Controls
 const controls = new OrbitControls(camera, canvas)
 controls.enableDamping = true
+
 
 /**
  * Renderer
@@ -141,6 +162,9 @@ for( let i = gridSize * gridSize - 1; i > gridSize * (gridSize - 2) - 1; i--){
     const enemy = new BasicEnemy(gridSpace, indexToCoordinates(i), manager);
     enemy.initializeModel();
 }
+
+
+
 
 
 // Game Controls
