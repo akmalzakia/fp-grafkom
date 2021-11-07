@@ -1,25 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ThreeJS Starter</title>
+    <title>Space Invader</title>
     <link href="style.css" rel="stylesheet">
+    <style>
+			#blocker {
+                font-family: 'Courier New', monospace;
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				background-color: rgba(0,0,0,0.5);
+			}
+
+			#instructions {
+				width: 100%;
+				height: 100%;
+
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+
+				text-align: center;
+				font-size: 30px;
+				cursor: pointer;
+			}
+      </style>
 </head>
+
 <body>
     <div id="blocker">
         <div id="instructions">
-            <p style="font-size:36px">
-                Click to play
+            <p style="font-size:60px; font-weight:bolder;">
+                Space Invader
             </p>
             <p>
-                Move: WASD<br/>
-                Jump: SPACE<br/>
-                Look: MOUSE
+                <br><br>
+                Click Anywhere to Play
             </p>
         </div>
     </div>
     <canvas class="webgl"></canvas>
     <script src="script.js" type="module"></script>
+
 </body>
+
 </html>

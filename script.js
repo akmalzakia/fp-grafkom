@@ -4,9 +4,20 @@ import * as dat from './three/dat.gui.module.js'
 import { Plane } from './Plane.js'
 import { BasicEnemy } from './BasicEnemy.js'
 
+function start(){
 
-// Canvas
-const canvas = document.querySelector('canvas.webgl')
+    const blocker = document.getElementById( 'blocker' );
+    const instructions = document.getElementById( 'instructions' );
+
+    instructions.addEventListener( 'click', function () {
+
+        instructions.style.display = 'none';
+        blocker.style.display = 'none';
+
+    } );
+
+    
+    const canvas = document.querySelector('canvas.webgl')
 
 // Scene
 const scene = new THREE.Scene()
@@ -248,3 +259,14 @@ const tick = () =>
 }
 
 tick();
+
+}
+
+// let button = document.getElementById('newGame');
+// button.addEventListener('click', () => {
+//     start();
+// });
+
+start();
+// init();
+// Canvas
