@@ -1,5 +1,5 @@
-import * as THREE from './three/three.module.js'
-import { GLTFLoader } from './three/loaders/GLTFLoader.js';
+import * as THREE from '../three/three.module.js'
+import { GLTFLoader } from '../three/loaders/GLTFLoader.js';
 
 export class GameObject {
     constructor(scene, loadingManager = null){
@@ -35,5 +35,24 @@ export class GameObject {
         this.model.position.set(this.position.x, this.position.y, this.position.z);
         this.model.rotation.set(this.rotation.x, this.rotation.y, this.rotation.z);
         this.scene.add(this.model);
+    }
+
+    isCollide(object){
+        if(object){
+            this.model.geometry.computeBoundingBox();
+            object.geometry.computeBoundingBox();
+
+            this.model.updateMatrixWorld();
+            object.updateMatrixWorld();
+
+            var bounding1 = this.model.geometry.boundingBox.clone();
+            bounding1.applyMatrix4(this.model.matrixWorld);
+            var bounding2 = object.geometry.boundingBox.clone();
+            bounding2.applyMatrix4(object.matrixWorld);
+            
+            return bounding1.intersectsBox(bounding2);
+        }
+
+        return false;
     }
 }

@@ -1,8 +1,8 @@
 import * as THREE from './three/three.module.js'
 import { OrbitControls } from './three/controls/OrbitControls.js'
 import * as dat from './three/dat.gui.module.js'
-import { Plane } from './Plane.js'
-import { BasicEnemy } from './BasicEnemy.js'
+import { Plane } from './components/Plane.js'
+import { BasicEnemy } from './components/BasicEnemy.js'
 
 function start(){
 
