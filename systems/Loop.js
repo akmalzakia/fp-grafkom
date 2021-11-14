@@ -25,7 +25,6 @@ class Loop {
 
     tick() {
         const delta = this.clock.getDelta();
-
         for (const object of this.updatables){
             object.tick(delta);
         }

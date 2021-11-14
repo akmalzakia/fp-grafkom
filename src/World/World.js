@@ -11,12 +11,19 @@ import { createControls } from "../../systems/controls.js";
 import { Plane } from "../../components/Plane.js";
 
 class World {
+    static playArea = {
+        px: 10,
+        nx: -10,
+        pz: 10,
+        nz: -10,
+    }
+
     constructor(canvas, sizes){
         this.sizes = sizes;
         this.loadManager = createLoadingManager();
         this.camera = createCamera(sizes);
         this.scene = createScene();
-        setPanorama(this.scene, '../assets/spacemap/', this.loadManager);
+        // setPanorama(this.scene, '../assets/spacemap/', this.loadManager);
         this.renderer = createRenderer(canvas, sizes);
         this.loop = new Loop(this.camera, this.scene, this.renderer);
         
@@ -31,11 +38,12 @@ class World {
         // this.scene.add(cube);
 
         const resizer = new Resizer(this.sizes, this.camera, this.renderer);
-        const plane = new Plane(this.scene, this.loadManager);
+        const plane = new Plane(this.scene, this.loop, this.loadManager);
         plane.initializeModel();
         console.log(plane.model);
+        
 
-        this.loop.updatables.push(plane);
+        
     }
 
     render(){

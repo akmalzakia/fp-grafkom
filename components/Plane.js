@@ -1,5 +1,6 @@
 import * as THREE from '../three/three.module.js'
 import { GameObject } from './GameObject.js'
+import { Missile } from './Missile.js';
 
 export class Plane extends GameObject{
 
@@ -8,16 +9,30 @@ export class Plane extends GameObject{
         ArrowUp: false,
         ArrowRight: false,
         ArrowDown: false,
+        Space: false,
     }
 
-    constructor(scene, loadingManager = null){
-        super(scene, loadingManager);
+    constructor(scene, loop, loadingManager = null){
+        super(scene, loop, loadingManager);
+
+        // Base
         this.url = '../assets/cartoon_plane/scene.gltf';
-        this.scale.set(.001, .001, .001);
+        this.scale.set(.003, .003, .003);
+        
+        // Movement
+        this.rotationSpeed = 1.5;
         this.minRotation = new THREE.Vector3(0, 0, THREE.Math.degToRad(-20));
         this.maxRotation = new THREE.Vector3(0, 0, THREE.Math.degToRad(20));
-        this.speed = 2;
-        this.rotationSpeed = 1.5;
+        this.speed = 4;
+        
+        // Shooting
+        this.fireRate = 0.25;
+        this.lastShot = 0;
+        this.allowShot = true;
+        // this.missiles = [];
+
+
+        this.loop.updatables.push(this);
         this.setEventListener();
     }
 
@@ -52,6 +67,40 @@ export class Plane extends GameObject{
 
     tick(delta) {
         this.move(delta);
+
+        
+
+        if(this.allowShot){
+            this.shoot();
+            this.allowShot = false;
+        }
+
+        if(this.loop.clock.getElapsedTime() - this.lastShot > this.fireRate){
+           
+            this.allowShot = true;
+        }
+
+        // helper
+        if(this.helper){
+            this.helper.update();
+        }
+
+        // // remove unused missile
+        // if(this.missiles.length && !this.missiles[0].model){
+        //     this.missiles.shift();
+        // }
+    }
+
+    shoot(){
+        if(this.key_press.Space){
+            const missile = new Missile(this.scene, this.loop, this.loadingManager);
+            missile.startPosition.set(-this.model.position.x, -this.model.position.y, - (this.model.position.z));
+            missile.initializeModel();
+            
+            // this.missiles.push(missile);
+
+            this.lastShot = this.loop.clock.getElapsedTime();
+        }
     }
 
     setEventListener(){
@@ -60,15 +109,19 @@ export class Plane extends GameObject{
                 if(e.code === "ArrowLeft"){
                     this.key_press.ArrowLeft = true;
                 }
-                else if(e.code === "ArrowUp"){
+                if(e.code === "ArrowUp"){
                     this.key_press.ArrowUp = true;
                 }
-                else if(e.code === "ArrowRight"){
+                if(e.code === "ArrowRight"){
                     this.key_press.ArrowRight = true;
                 }
-                else if(e.code === "ArrowDown"){
+                if(e.code === "ArrowDown"){
                     this.key_press.ArrowDown = true;
                 }
+                if(e.code === "Space"){
+                    this.key_press.Space = true;
+                }
+                
             }
         });
         window.addEventListener('keyup', (e) => {
@@ -84,6 +137,9 @@ export class Plane extends GameObject{
                 }
                 if(e.code === "ArrowDown"){
                     this.key_press.ArrowDown = false;
+                }
+                if(e.code === "Space"){
+                    this.key_press.Space = false;
                 }
             }
         });
