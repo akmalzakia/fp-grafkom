@@ -16,6 +16,7 @@ class World {
     // Setup your game here
 
     constructor(canvas, sizes){
+        this.isRunning = false;
         this.sizes = sizes;
         this.loadManager = createLoadingManager();
         this.camera = createCamera(sizes);
@@ -48,7 +49,7 @@ class World {
         enemy.startPosition.set(0, 0, -10);
         enemy.initializeModel();
         this.scene.collidableObject.push(enemy);
-        
+        this.loop.updatables.push(enemy);
     }
 
     // Render world
@@ -60,10 +61,12 @@ class World {
 
     start(){
         this.loop.start();
+        this.isRunning = true;
     }
 
     stop(){
         this.loop.stop();
+        this.isRunning = false;
     }
 }
 

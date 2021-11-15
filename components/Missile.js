@@ -21,7 +21,7 @@ class Missile extends GameObject{
 
     move(delta){
         this.model.position.z += delta * this.speed;
-        console.log(this.model.position.z);
+        // console.log(this.model.position.z);
         if(this.model.position.z > -this.startPosition.z + this.distance){
             this.dispose();
         }

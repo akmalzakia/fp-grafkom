@@ -13,6 +13,18 @@ function main() {
 
     // world scene
     world.start();
+
+    document.addEventListener('keydown', (e) => {
+        if(e.key === 'Escape'){
+            if(world.isRunning){
+                world.stop();
+            }
+            else{
+                world.start();
+            }
+        }
+
+    })
 }
 
 main();

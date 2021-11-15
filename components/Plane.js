@@ -30,6 +30,7 @@ export class Plane extends GameObject{
         this.fireRate = 0.25;
         this.lastShot = 0;
         this.allowShot = true;
+        this.fireTime = 0;
         // this.missiles = [];
 
 
@@ -71,17 +72,17 @@ export class Plane extends GameObject{
     // Animation
 
     tick(delta) {
+
         this.move(delta);
 
-        
-
+        this.fireTime = this.loop.time - this.lastShot;
         if(this.allowShot){
             this.shoot();
             this.allowShot = false;
+            
         }
 
-        if(this.loop.clock.getElapsedTime() - this.lastShot > this.fireRate){
-           
+        if( this.fireTime > this.fireRate){
             this.allowShot = true;
         }
 
@@ -105,8 +106,8 @@ export class Plane extends GameObject{
             missile.initializeModel();
             
             // this.missiles.push(missile);
-
-            this.lastShot = this.loop.clock.getElapsedTime();
+            // console.log(`fired at : ${this.loop.time} , lastShot : ${this.lastShot} , fireTime : ${this.fireTime}`);
+            this.lastShot = this.loop.lastTime
         }
     }
 
