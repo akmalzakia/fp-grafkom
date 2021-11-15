@@ -1,5 +1,6 @@
 import { Clock } from "../three/three.module.js";
 
+// Loop class for the world loop
 
 class Loop {
 
@@ -11,6 +12,8 @@ class Loop {
         this.updatables = [];
     }
 
+    // Start the loop
+
     start() {
         this.renderer.setAnimationLoop(() => {
 
@@ -19,9 +22,13 @@ class Loop {
         })
     }
 
+    // Stop the loop
+
     stop() {
         this.renderer.setAnimationLoop(null);
     }
+
+    // Handle animated objects
 
     tick() {
         const delta = this.clock.getDelta();

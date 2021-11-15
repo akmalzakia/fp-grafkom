@@ -1,10 +1,10 @@
 import { GameObject } from "./GameObject.js";
 
 export class BasicEnemy extends GameObject {
-    constructor(scene, position, loadingManager = null){
-        super(scene, loadingManager);
-        this.url = 'assets/invader_5/scene.gltf';
-        this.scale.set(0.8, 0.8, 0.8);
-        this.position.set(position.x, 0, position.y);
+    constructor(scene, loop, loadingManager = null){
+        super(scene, loop, loadingManager);
+        this.url = '../assets/invader_5/scene.gltf';
+        this.scale.set(1.5, 1.5, 1.5);
+        this.name = "Enemy"
     }
 }

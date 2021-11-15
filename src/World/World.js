@@ -9,14 +9,10 @@ import { Loop } from "../../systems/Loop.js";
 import { Resizer } from "../../systems/Resizer.js";
 import { createControls } from "../../systems/controls.js";
 import { Plane } from "../../components/Plane.js";
+import { BasicEnemy } from "../../components/BasicEnemy.js";
 
 class World {
-    static playArea = {
-        px: 10,
-        nx: -10,
-        pz: 10,
-        nz: -10,
-    }
+    // Setup your game here
 
     constructor(canvas, sizes){
         this.sizes = sizes;
@@ -35,16 +31,24 @@ class World {
         this.loop.updatables.push(controls);
 
         this.scene.add(light)
+        this.scene.collidableObject = [];
+
         // this.scene.add(cube);
 
         const resizer = new Resizer(this.sizes, this.camera, this.renderer);
         const plane = new Plane(this.scene, this.loop, this.loadManager);
         plane.initializeModel();
         console.log(plane.model);
+        this.scene.collidableObject.push(plane);
         
-
+        const enemy = new BasicEnemy(this.scene, this.loop, this.loadManager);
+        enemy.startPosition.set(0, 0, -10);
+        enemy.initializeModel();
+        this.scene.collidableObject.push(enemy);
         
     }
+
+    // Render world
 
     render(){
         this.renderer.render(this.scene, this.camera);

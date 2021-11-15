@@ -10,6 +10,8 @@ function main() {
 
     const canvas = document.querySelector('canvas.webgl');
     const world = new World(canvas, sizes);
+
+    // world scene
     world.start();
 }
 

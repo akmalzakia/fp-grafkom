@@ -18,6 +18,7 @@ export class Plane extends GameObject{
         // Base
         this.url = '../assets/cartoon_plane/scene.gltf';
         this.scale.set(.003, .003, .003);
+        this.name = 'Plane';
         
         // Movement
         this.rotationSpeed = 1.5;
@@ -35,6 +36,8 @@ export class Plane extends GameObject{
         this.loop.updatables.push(this);
         this.setEventListener();
     }
+
+    // Movement
 
     move(delta){
 
@@ -65,6 +68,8 @@ export class Plane extends GameObject{
         this.model.rotation.setFromVector3(this.rotation);
     }
 
+    // Animation
+
     tick(delta) {
         this.move(delta);
 
@@ -91,6 +96,8 @@ export class Plane extends GameObject{
         // }
     }
 
+    // Shoot function
+
     shoot(){
         if(this.key_press.Space){
             const missile = new Missile(this.scene, this.loop, this.loadingManager);
@@ -102,6 +109,8 @@ export class Plane extends GameObject{
             this.lastShot = this.loop.clock.getElapsedTime();
         }
     }
+
+    // Set the event listener
 
     setEventListener(){
         window.addEventListener('keydown', (e) => {

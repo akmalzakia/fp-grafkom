@@ -5,6 +5,7 @@ class Missile extends GameObject{
         super(scene, loop, loadingManager);
         this.url = '../assets/missile/scene.gltf';
         this.scale.set(.01, .01, .01);
+        this.name = "Missile"
         
         //Movement
         this.speed = 20;
@@ -16,6 +17,8 @@ class Missile extends GameObject{
         this.loop.updatables.push(this);
     }
 
+    // Movement
+
     move(delta){
         this.model.position.z += delta * this.speed;
         console.log(this.model.position.z);
@@ -24,14 +27,30 @@ class Missile extends GameObject{
         }
     }
 
+    // Animation
+
     tick(delta){
         if(this.model){
             this.move(delta);
             if(this.helper){
                 this.helper.update();
             }
+
+            this.checkEnemyCollision();
         }
     }
+
+    // Collision Detection
+
+    checkEnemyCollision(){
+        const enemies = this.scene.collidableObject.filter((o) => o.name === 'Enemy');
+        const enemy = enemies.find((o) => this.isCollide(o.model))
+        if(enemy){
+            enemy.dispose();
+            this.dispose();
+        }
+    }
+
 }
 
 export { Missile }

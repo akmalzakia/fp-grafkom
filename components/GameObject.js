@@ -4,6 +4,7 @@ import { Loop } from '../systems/Loop.js';
 
 export class GameObject {
     constructor(scene, loop, loadingManager = null){
+        this.name = "";
         this.loadingManager = loadingManager;
         /**
          * @type {Loop} this.loop
@@ -18,6 +19,8 @@ export class GameObject {
 
         this.helper = null;
     }
+
+    // Model Loader
 
     loadModel(){
         return new Promise((resolve, reject) => {
@@ -37,34 +40,35 @@ export class GameObject {
         });
     }
 
+    // Initialize the model
+
     async initializeModel(){
         this.model = await this.loadModel();
+        // console.log(this.model);
         this.model.scale.set(this.scale.x, this.scale.y, this.scale.z);
         this.model.position.set(this.startPosition.x, this.startPosition.y, this.startPosition.z);
         this.model.rotation.set(this.rotation.x, this.rotation.y, this.rotation.z);
+        this.model.name = this.name;
         this.center();
         this.scene.add(this.model);
         this.enableHelper()
     }
 
+    // Collision Detection
+
     isCollide(object){
-        if(object){
-            this.model.geometry.computeBoundingBox();
-            object.geometry.computeBoundingBox();
+        if(object && this.model){
 
-            this.model.updateMatrixWorld();
-            object.updateMatrixWorld();
-
-            var bounding1 = this.model.geometry.boundingBox.clone();
-            bounding1.applyMatrix4(this.model.matrixWorld);
-            var bounding2 = object.geometry.boundingBox.clone();
-            bounding2.applyMatrix4(object.matrixWorld);
+            var bounding1 = new THREE.Box3().setFromObject(this.model)
+            var bounding2 = new THREE.Box3().setFromObject(object)
             
             return bounding1.intersectsBox(bounding2);
         }
 
         return false;
     }
+
+    // Center the object on its scene
 
     center(){
         const bbox = new THREE.Box3().setFromObject(this.model);
@@ -80,6 +84,8 @@ export class GameObject {
 
 
     }
+
+    // Dispose / Remove the object
 
     dispose(){
         this.model.traverse((o) => {
@@ -97,6 +103,8 @@ export class GameObject {
         }
     }
 
+    // Box Helper for threejs
+
     enableHelper(){
         this.helper = new THREE.BoxHelper(this.model, 0xffff00);
         this.scene.add(this.helper);
@@ -104,5 +112,6 @@ export class GameObject {
 
     disableHelper(){
         this.helper.visible = false;
+        this.scene.remove(this.helper);
     }
 }
