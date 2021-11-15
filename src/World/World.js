@@ -10,6 +10,7 @@ import { Resizer } from "../../systems/Resizer.js";
 import { createControls } from "../../systems/controls.js";
 import { Plane } from "../../components/Plane.js";
 import { BasicEnemy } from "../../components/BasicEnemy.js";
+import { Grid } from "../../systems/Grid.js";
 
 class World {
     // Setup your game here
@@ -22,6 +23,8 @@ class World {
         // setPanorama(this.scene, '../assets/spacemap/', this.loadManager);
         this.renderer = createRenderer(canvas, sizes);
         this.loop = new Loop(this.camera, this.scene, this.renderer);
+        const grid = new Grid(this.scene);
+        grid.enable();
         
 
         const controls = createControls(this.camera, canvas);
