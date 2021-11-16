@@ -42,7 +42,6 @@ class World {
         const resizer = new Resizer(this.sizes, this.camera, this.renderer);
         const plane = new Plane(this.scene, this.loop, this.loadManager);
         plane.initializeModel();
-        console.log(plane.model);
         this.scene.collidableObject.push(plane);
         
         const enemy = new BasicEnemy(this.scene, this.loop, this.loadManager);

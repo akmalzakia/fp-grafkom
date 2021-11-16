@@ -14,6 +14,8 @@ function main() {
     // world scene
     world.start();
 
+
+    // Pause
     document.addEventListener('keydown', (e) => {
         if(e.key === 'Escape'){
             if(world.isRunning){

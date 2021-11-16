@@ -1,6 +1,7 @@
 import * as THREE from '../three/three.module.js'
 import { GLTFLoader } from '../three/loaders/GLTFLoader.js';
 import { Loop } from '../systems/Loop.js';
+import { removeItemOnce } from '../systems/functional.js';
 
 export class GameObject {
     constructor(scene, loop, loadingManager = null){
@@ -88,19 +89,26 @@ export class GameObject {
     // Dispose / Remove the object
 
     dispose(){
-        this.model.traverse((o) => {
+        const mdl = this.model;
+        this.scene.remove(this.model);
+        this.scene.collidableObject = removeItemOnce(this.scene.collidableObject, this);
+        this.model = null;
+
+        console.log('disposed');
+
+        mdl.traverse((o) => {
             if(o instanceof THREE.Mesh){
                 o.geometry.dispose();
                 o.material.dispose();
             }
         })
 
-        this.scene.remove(this.model);
-        this.model = null;
 
         if(this.helper){
             this.disableHelper();
         }
+
+        
     }
 
     // Box Helper for threejs
@@ -114,4 +122,6 @@ export class GameObject {
         this.helper.visible = false;
         this.scene.remove(this.helper);
     }
+
+    
 }

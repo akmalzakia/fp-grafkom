@@ -48,9 +48,13 @@ class Loop {
     tick() {
         this.time += 0.01;
         const delta = this.time - this.lastTime;
+        // console.log(this.time);
+
         for (const object of this.updatables){
             object.tick(delta);
         }
+
+        // console.log(this.updatables);
         this.lastTime = this.time;
     }
 }
