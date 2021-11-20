@@ -1,16 +1,17 @@
 import { GameObject } from "./GameObject.js";
+import { Plane } from "./Plane.js";
 
 
 class Enemy extends GameObject {
-    constructor(scene, loop, loadingManager = null) {
-        super(scene, loop, loadingManager)
+    constructor(loop, loadingManager = null) {
+        super(loop, loadingManager)
         this.name = "Enemy";
         this.hp = 100;
         this.damage = 10;
     }
 
     collidePlayer() {
-        const player = this.scene.collidableObject.filter((o) => o.name === 'Plane');
+        const player = this.scene.collidableObject.filter((o) => o instanceof Plane);
         const p = player.find((o) => this.isCollide(o.model));
         if(p !== undefined) {
             this.takeDamage(p.damage);
@@ -26,6 +27,10 @@ class Enemy extends GameObject {
         if(this.hp <= 0) {
             this.dispose();
         }
+    }
+
+    move() {
+        // Constraint Movement
     }
 
 }

@@ -2,8 +2,8 @@ import { Enemy } from "./Enemy.js";
 
 export class BasicEnemy extends Enemy {
 
-    constructor(scene, loop, loadingManager = null){
-        super(scene, loop, loadingManager);
+    constructor(loop, loadingManager = null){
+        super(loop, loadingManager);
         this.url = '../assets/invader_5/scene.gltf';
         this.scale.set(1.5, 1.5, 1.5);
         this.name = "BasicEnemy"
@@ -27,20 +27,25 @@ export class BasicEnemy extends Enemy {
 
     horizontalMove(delta){
         if(this.model){
-            const range = this.model.position.x - this.startPosition.x;
+            const range =  this.model.position.x - this.startPosition.x;
+            // console.log(`${this.name} : ${this.model.position.x}, ${this.model.position.y}, ${this.model.position.z}`);
             if(range > this.maxHorizontalRange || range < -this.maxHorizontalRange){
                 this.dir *= -1;
             }
-            // console.log(delta);
+            
             this.model.position.x += this.speed * delta * this.dir;
         }
     }
 
+    move(delta) {
+        super.move(delta);
+        this.horizontalMove(delta);
+        this.verticalMove(delta);
+    }
+
     tick(delta){
         if(this.model){
-            this.horizontalMove(delta);
-            this.verticalMove(delta);
-
+            this.move(delta);
             this.collidePlayer();
 
 

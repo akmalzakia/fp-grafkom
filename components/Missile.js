@@ -1,8 +1,9 @@
+import { Enemy } from "./Enemy.js";
 import { GameObject } from "./GameObject.js";
 
 class Missile extends GameObject{
-    constructor(scene, loop, loadingManager = null){
-        super(scene, loop, loadingManager);
+    constructor(loop, loadingManager = null){
+        super(loop, loadingManager);
         this.url = '../assets/missile/scene.gltf';
         this.scale.set(.01, .01, .01);
         this.name = "Missile"
@@ -43,11 +44,10 @@ class Missile extends GameObject{
     // Collision Detection
 
     checkEnemyCollision(){
-        const enemies = this.scene.collidableObject.filter((o) => o.name === 'Enemy');
+        const enemies = this.scene.collidableObject.filter((o) => o instanceof Enemy);
         const enemy = enemies.find((o) => this.isCollide(o.model))
         if(enemy){
-            enemy.dispose();
-            this.dispose();
+            enemy.takeDamage(this.damage);
         }
     }
 

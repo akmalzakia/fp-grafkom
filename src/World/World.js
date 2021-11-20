@@ -1,5 +1,4 @@
 import { createCamera } from "../../components/camera.js";
-import { createCube } from "../../components/cube.js";
 import { createLights } from "../../components/lights.js";
 import { createScene, setPanorama } from "../../components/scene.js";
 import { createRenderer } from "../../systems/renderer.js";
@@ -11,6 +10,7 @@ import { createControls } from "../../systems/controls.js";
 import { Plane } from "../../components/Plane.js";
 import { BasicEnemy } from "../../components/BasicEnemy.js";
 import { Grid } from "../../systems/Grid.js";
+import { Spawner } from "../../components/Spawner.js";
 
 class World {
     // Setup your game here
@@ -21,12 +21,17 @@ class World {
         this.loadManager = createLoadingManager();
         this.camera = createCamera(sizes);
         this.scene = createScene();
+        this.scene.name = "Main Scene"
         // setPanorama(this.scene, '../assets/spacemap/', this.loadManager);
         this.renderer = createRenderer(canvas, sizes);
         this.loop = new Loop(this.camera, this.scene, this.renderer);
         const grid = new Grid(this.scene);
+        
         grid.enable();
         
+        //Custom Scene Variables
+        this.scene.collidableObject = [];
+        this.scene.grid = grid;
 
         const controls = createControls(this.camera, canvas);
         const light = createLights();
@@ -35,20 +40,27 @@ class World {
         this.loop.updatables.push(controls);
 
         this.scene.add(light)
-        this.scene.collidableObject = [];
+        
 
         // this.scene.add(cube);
 
         const resizer = new Resizer(this.sizes, this.camera, this.renderer);
-        const plane = new Plane(this.scene, this.loop, this.loadManager);
-        plane.initializeModel();
+        const plane = new Plane(this.loop, this.loadManager);
+        plane.initializeModel(this.scene);
         this.scene.collidableObject.push(plane);
+
+        const spawner = new Spawner(this.loop, grid);
+        spawner.initializeModel(grid.gridSpace);
+
+        for(let i = 0; i < 10; i++) {
+            const enemy = new BasicEnemy(this.loop, this.loadManager);
+            spawner.spawnObject(enemy, i, 0);
+            enemy.name = enemy.name + i;
+            this.scene.collidableObject.push(enemy);
+            this.loop.updatables.push(enemy);
+        }
         
-        const enemy = new BasicEnemy(this.scene, this.loop, this.loadManager);
-        enemy.startPosition.set(0, 0, -10);
-        enemy.initializeModel();
-        this.scene.collidableObject.push(enemy);
-        this.loop.updatables.push(enemy);
+        
     }
 
     // Render world

@@ -1,4 +1,4 @@
-import { GridHelper, Object3D } from "../three/three.module.js";
+import { GridHelper, Object3D, Vector2 } from "../three/three.module.js";
 
 class Grid {
     constructor(scene){
@@ -10,6 +10,13 @@ class Grid {
         this.gridSpace = new Object3D();
         this.gridSpace.position.set(-(this.size/2) + (this.square/2), 0,  - (this.size/2) + (this.square/2));
         this.grid = new GridHelper(this.size, this.divisions);
+
+        // Constraint 
+        this.px = this.size / 2;
+        this.py = this.size / 2;
+        this.nx = -this.size / 2;
+        this.xy = -this.size / 2;
+        
     }
 
     enable(){
@@ -25,7 +32,7 @@ class Grid {
     indexToCoordinates(index){
         const x = index % this.divisions * this.square;
         const z = Math.floor(index / this.divisions) * this.square;
-        return new THREE.Vector2(x, z);
+        return new Vector2(-x, -z);
     }
     
     //kurang, masi salah kalo griddivision != gridsize
