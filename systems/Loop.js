@@ -13,6 +13,11 @@ class Loop {
         this.lastTime = 0;
         this.time = 0;
         this.updatables = [];
+
+        this.lastfps_second = 0;
+        this.fps = 0;
+        this.second = 0;
+        this.second_counter = 0;
     }
 
     // Start the loop
@@ -46,10 +51,26 @@ class Loop {
     // Handle animated objects
 
     tick() {
+        if(this.lastfps_second === 0) {
+            this.lastfps_second = performance.now();
+            this.fps = 0;
+            return;
+        }
+        const del = (performance.now() - this.lastfps_second) / 1000;
+        this.lastfps_second = performance.now();
+        this.fps = 1/del;
+
         this.time += 0.01;
         const delta = this.time - this.lastTime;
-        // console.log(this.time);
+        
+        this.second_counter += 1;
+        if(this.second_counter > this.fps) {
+            this.second_counter = 0;
+            this.second++;
+            console.log(this.second);
+        }
 
+      
         for (const object of this.updatables){
             object.tick(delta);
         }
