@@ -1,3 +1,4 @@
+import { timeout } from "../systems/functional.js";
 import { BoxGeometry, BoxHelper, Color, LineSegments, Vector3, WireframeGeometry } from "../three/three.module.js";
 import { createBoxWireframe } from "./boxWireframe.js";
 import { GameObject } from "./GameObject.js";
@@ -23,7 +24,7 @@ class Spawner extends GameObject{
      * Spawn GameObject From Spawner Position
      * @param {GameObject} object 
      */
-    spawnObject(object, position, time) {
+    spawnObject(object, position) {
         if(position < this.segmentSize && position >= 0) {
             // const test = createBoxWireframe(new Vector3(1, 1, 1), 0xff0000);
             // const pos = this.spawnerPositionToGridPosition(this.segments[position].position);
@@ -37,6 +38,28 @@ class Spawner extends GameObject{
             object.initializeModel(this.grid ? this.grid.scene : this.scene);
             // console.log(object.model.position);
         }
+    }
+
+    /**
+     * Spawn Wave
+     * @param {Wave} wave 
+     */
+
+    async spawnWave(wave) {
+        if(wave.startTime !== 0) {
+            await timeout(wave.startTime);
+        }
+
+        console.log("Wave Starting");
+        
+        const promises = [];
+
+        for(let i = 0; i < wave.items.length; i++) {
+            promises.push(new Promise(() => timeout(wave.items[i].time).then(() => this.spawnObject(wave.items[i].object, wave.items[i].position))));
+        }
+
+        let x = Promise.all(promises);
+        setTimeout(() => console.log(x));
     }
 
     initializeSegments() {

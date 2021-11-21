@@ -46,7 +46,6 @@ export class Plane extends GameObject{
 
     move(delta){
 
-        // console.log(this.model.position);
         // Constraint Movement
         let allowUp = true, allowLeft = true, allowRight = true, allowDown = true;
         if(this.scene.grid) {

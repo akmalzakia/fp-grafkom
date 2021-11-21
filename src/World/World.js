@@ -11,6 +11,7 @@ import { Plane } from "../../components/Plane.js";
 import { BasicEnemy } from "../../components/BasicEnemy.js";
 import { Grid } from "../../systems/Grid.js";
 import { Spawner } from "../../components/Spawner.js";
+import { Wave } from "../../components/Wave.js";
 
 class World {
     // Setup your game here
@@ -52,13 +53,17 @@ class World {
         const spawner = new Spawner(this.loop, grid);
         spawner.initializeModel(grid.gridSpace);
 
+        const wave1 = new Wave("wave1", 1000);
         for(let i = 0; i < 10; i++) {
             const enemy = new BasicEnemy(this.loop, this.loadManager);
-            spawner.spawnObject(enemy, i, 0);
             enemy.name = enemy.name + i;
+            // spawner.spawnObject(enemy, i, 0);
+            wave1.addObject(enemy, i, 1000 * i);
             this.scene.collidableObject.push(enemy);
             this.loop.updatables.push(enemy);
         }
+
+        spawner.spawnWave(wave1);
         
         
     }

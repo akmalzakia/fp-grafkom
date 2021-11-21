@@ -64,10 +64,11 @@ class Loop {
         const delta = this.time - this.lastTime;
         
         this.second_counter += 1;
+
         if(this.second_counter > this.fps) {
             this.second_counter = 0;
             this.second++;
-            console.log(this.second);
+            
         }
 
       
