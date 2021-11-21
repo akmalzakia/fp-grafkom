@@ -23,7 +23,7 @@ class World {
         this.camera = createCamera(sizes);
         this.scene = createScene();
         this.scene.name = "Main Scene"
-        // setPanorama(this.scene, '../assets/spacemap/', this.loadManager);
+        setPanorama(this.scene, '../assets/spacemap/', this.loadManager);
         this.renderer = createRenderer(canvas, sizes);
         this.loop = new Loop(this.camera, this.scene, this.renderer);
         const grid = new Grid(this.scene);

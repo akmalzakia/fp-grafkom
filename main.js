@@ -9,11 +9,21 @@ function main() {
     }
 
     const canvas = document.querySelector('canvas.webgl');
+
+    const blocker = document.getElementById( 'blocker' );
+    const instructions = document.getElementById( 'instructions' );
+
+    instructions.addEventListener( 'click', function () {
+
+        instructions.style.display = 'none';
+        blocker.style.display = 'none';
+
+    } );
+
     const world = new World(canvas, sizes);
 
     // world scene
     world.start();
-
 
     // Pause
     document.addEventListener('keydown', (e) => {
