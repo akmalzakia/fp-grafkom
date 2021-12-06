@@ -1,5 +1,6 @@
 import { World } from "./src/World/World.js";
-
+import { hardWorld } from "./src/World/hardWorld.js";
+import { easyWorld } from "./src/World/easyWorld.js";
 
 function main() {
 
@@ -20,7 +21,8 @@ function main() {
 
     } );
 
-    const world = new World(canvas, sizes);
+
+    const world = new hardWorld(canvas, sizes);
 
     // world scene
     world.start();

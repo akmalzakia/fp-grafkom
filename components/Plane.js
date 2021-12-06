@@ -162,6 +162,7 @@ export class Plane extends GameObject{
 
         if(this.hp <= 0) {
             this.dispose();
+
         }
         else {
             this.invisibility();

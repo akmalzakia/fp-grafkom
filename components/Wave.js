@@ -1,4 +1,3 @@
-
 class Wave {
     constructor(name, startTime = 0) {
         this.name = name;
