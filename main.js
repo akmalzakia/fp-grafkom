@@ -18,14 +18,12 @@ function main() {
 
         instructions.style.display = 'none';
         blocker.style.display = 'none';
-
+        world.start();
     } );
 
 
     const world = new hardWorld(canvas, sizes);
-
-    // world scene
-    world.start();
+    world.stop();
 
     // Pause
     document.addEventListener('keydown', (e) => {

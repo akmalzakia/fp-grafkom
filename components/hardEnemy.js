@@ -1,6 +1,6 @@
 import { Enemy } from "./Enemy.js";
 
-export class BasicEnemy extends Enemy {
+export class HardEnemy extends Enemy {
 
     constructor(loop, loadingManager = null){
         super(loop, loadingManager);

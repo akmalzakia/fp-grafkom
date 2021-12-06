@@ -8,7 +8,7 @@ import { Loop } from "../../systems/Loop.js";
 import { Resizer } from "../../systems/Resizer.js";
 import { createControls } from "../../systems/controls.js";
 import { Plane } from "../../components/Plane.js";
-import { BasicEnemy } from "../../components/BasicEnemy.js";
+import { HardEnemy } from "../../components/HardEnemy.js";
 import { Grid } from "../../systems/Grid.js";
 import { Spawner } from "../../components/Spawner.js";
 import { Wave } from "../../components/Wave.js";
@@ -65,7 +65,9 @@ class hardWorld {
             this.loop.updatables.push(enemy);
         }
 
-        spawner.spawnWave(wave2);
+        if(this.loop.isRunning) {
+            spawner.spawnWave(wave2);
+        }
         
         
     }
