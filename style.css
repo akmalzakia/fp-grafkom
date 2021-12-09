@@ -1,19 +1,19 @@
-*
-{
+* {
     margin: 0;
     padding: 0;
 }
 
 html,
-body
-{
+body {
     height: 100vh;
     font-family: 'Poppins';
-    color:white;
+    color: white !important;
+    background-image: url(assets/spacemap/ny.png);
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
-.webgl
-{
+.webgl {
     /* position: fixed; */
     top: 0;
     /* left: 0; */
@@ -24,4 +24,35 @@ body
     position: absolute;
     position: 0 0;
     font-size: 1.5rem;
+}
+
+#scoreboard {
+    font-family: sans-serif;
+    color: #fff;
+    font-weight: 100;
+    text-align: center;
+    font-size: 30px;
+    position: fixed;
+    display: block;
+    z-index: 99;
+    margin: 1rem 1rem;
+}
+
+#scoreboard>div {
+    padding: 10px;
+    border-radius: 3px;
+    background: #0e3172;
+    display: inline-block;
+}
+
+#scoreboard div>span {
+    padding: 15px;
+    border-radius: 3px;
+    background: #5372ac;;
+    display: inline-block;
+}
+
+.smalltext {
+    padding-top: 5px;
+    font-size: 16px;
 }

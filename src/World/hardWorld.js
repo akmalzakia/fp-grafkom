@@ -8,10 +8,12 @@ import { Loop } from "../../systems/Loop.js";
 import { Resizer } from "../../systems/Resizer.js";
 import { createControls } from "../../systems/controls.js";
 import { Plane } from "../../components/Plane.js";
+import { BasicEnemy } from "../../components/BasicEnemy.js";
 import { HardEnemy } from "../../components/HardEnemy.js";
 import { Grid } from "../../systems/Grid.js";
 import { Spawner } from "../../components/Spawner.js";
 import { Wave } from "../../components/Wave.js";
+import { score, scoreboard, nilai} from "../../components/score.js";
 
 class hardWorld {
     // Setup your game here
@@ -52,11 +54,11 @@ class hardWorld {
 
         const spawner = new Spawner(this.loop, grid);
         spawner.initializeModel(grid.gridSpace);
-        console.log('hard');
+        console.log(score);
 
 
         const wave2 = new Wave("wave2", 1000);
-        for(let i = 0; i < 30; i++) {
+        for(let i = 0; i < 10; i++) {
             const enemy = new HardEnemy(this.loop, this.loadManager);
             enemy.name = enemy.name + i;
             // spawner.spawnObject(enemy, i, 0);
@@ -65,9 +67,21 @@ class hardWorld {
             this.loop.updatables.push(enemy);
         }
 
-        if(this.loop.isRunning) {
-            spawner.spawnWave(wave2);
+        for(let j = 0; j < 10; j++) {
+            const enemy = new BasicEnemy(this.loop, this.loadManager);
+            enemy.name = enemy.name + j;
+            // spawner.spawnObject(enemy, i, 0);
+            wave2.addObject(enemy, j, 1000 * j);
+            this.scene.collidableObject.push(enemy);
+            this.loop.updatables.push(enemy);
         }
+
+        spawner.spawnWave(wave2);
+        nilai.innerHTML = score.value;
+
+        // if(this.loop.isRunning) {
+        //     spawner.spawnWave(wave2);
+        // }
         
         
     }

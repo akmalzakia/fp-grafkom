@@ -4,13 +4,13 @@ export class HardEnemy extends Enemy {
 
     constructor(loop, loadingManager = null){
         super(loop, loadingManager);
-        this.url = '../assets/invader_5/scene.gltf';
-        this.scale.set(1.5, 1.5, 1.5);
+        this.url = '../assets/invader_1/scene.gltf';
+        this.scale.set(0.1, 0.1, 0.1);
         this.name = "HardEnemy"
-        this.speed = 10;
+        this.speed = 7;
 
         //movement
-        this.maxHorizontalRange = 5;
+        this.maxHorizontalRange = 3;
         this.dir = 1;
         this.hp = 10;
 

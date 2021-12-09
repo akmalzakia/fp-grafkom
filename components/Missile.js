@@ -1,5 +1,6 @@
 import { Enemy } from "./Enemy.js";
 import { GameObject } from "./GameObject.js";
+import { score, scoreboard, nilai} from "./score.js";
 
 class Missile extends GameObject{
     constructor(loop, loadingManager = null){
@@ -48,6 +49,9 @@ class Missile extends GameObject{
         const enemy = enemies.find((o) => this.isCollide(o.model))
         if(enemy){
             enemy.takeDamage(this.damage);
+            score.value++;
+            console.log('score: ', score.value);
+            nilai.innerHTML = score.value;
         }
     }
 

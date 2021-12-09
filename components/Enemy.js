@@ -1,5 +1,6 @@
 import { GameObject } from "./GameObject.js";
 import { Plane } from "./Plane.js";
+import { score, nilai} from "./score.js";
 
 class Enemy extends GameObject {
     constructor(loop, loadingManager = null) {
@@ -15,8 +16,9 @@ class Enemy extends GameObject {
         if(p !== undefined) {
             this.takeDamage(p.damage);
             p.takeDamage(this.damage);
-            // score.value++;
-            // console.log(score.value);
+            score.value--;
+            console.log('score: ', score.value);
+            nilai.innerHTML = score.value;
         } 
     }
 

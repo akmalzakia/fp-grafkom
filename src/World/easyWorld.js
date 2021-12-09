@@ -12,6 +12,8 @@ import { BasicEnemy } from "../../components/BasicEnemy.js";
 import { Grid } from "../../systems/Grid.js";
 import { Spawner } from "../../components/Spawner.js";
 import { Wave } from "../../components/Wave.js";
+import { score, scoreboard, nilai} from "../../components/score.js";
+
 
 class easyWorld {
     // Setup your game here
@@ -64,7 +66,8 @@ class easyWorld {
         }
 
         spawner.spawnWave(wave1);
-        
+        nilai.innerHTML = score.value;
+
         
     }
 
