@@ -2,6 +2,7 @@ import { GameObject } from "./GameObject.js";
 import { Plane } from "./Plane.js";
 import { score, nilai} from "./score.js";
 
+
 class Enemy extends GameObject {
     constructor(loop, loadingManager = null) {
         super(loop, loadingManager)
@@ -17,14 +18,14 @@ class Enemy extends GameObject {
             this.takeDamage(p.damage);
             p.takeDamage(this.damage);
             score.value--;
-            console.log('score: ', score.value);
+            // console.log('score: ', score.value);
             nilai.innerHTML = score.value;
         } 
     }
 
     takeDamage(damage) {
         this.hp -= damage;
-        console.log(this.hp);
+        // console.log(this.hp);
 
         // die
         if(this.hp <= 0) {

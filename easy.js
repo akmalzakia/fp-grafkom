@@ -16,10 +16,7 @@ function main() {
     const instructions = document.getElementById( 'instructions' );
 
     instructions.addEventListener( 'click', function () {
-
-        instructions.style.display = 'none';
-        blocker.style.display = 'none';
-        
+        start();
     } );
 
 
@@ -39,6 +36,23 @@ function main() {
         }
 
     })
+
+    window.onblur = function() {
+        pause();
+    }
+
+
+    function pause() {
+        world.stop();
+        instructions.style.display = 'flex';
+        blocker.style.display = 'block';
+    }
+
+    function start() {
+        world.start();
+        instructions.style.display = 'none';
+        blocker.style.display = 'none';
+    }
 
 
 

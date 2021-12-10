@@ -54,7 +54,7 @@ export class GameObject{
         this.model.rotation.set(this.rotation.x, this.rotation.y, this.rotation.z);
         this.model.name = this.name;
         this.startPosition.set(-this.model.position.x, this.model.position.y, -this.model.position.z);
-        console.log(`${this.name} : ${this.startPosition.x}, ${this.startPosition.y}, ${this.startPosition.z}`);
+        // console.log(`${this.name} : ${this.startPosition.x}, ${this.startPosition.y}, ${this.startPosition.z}`);
         
         this.center();
 
@@ -102,7 +102,7 @@ export class GameObject{
         this.scene.collidableObject = removeItemOnce(this.scene.collidableObject, this);
         this.model = null;
 
-        console.log('disposed');
+        // console.log('disposed');
 
         mdl.traverse((o) => {
             if(o instanceof THREE.Mesh){

@@ -7,12 +7,12 @@ export class HardEnemy extends Enemy {
         this.url = '../assets/invader_1/scene.gltf';
         this.scale.set(0.1, 0.1, 0.1);
         this.name = "HardEnemy"
-        this.speed = 7;
+        this.speed = 6;
 
         //movement
         this.maxHorizontalRange = 3;
         this.dir = 1;
-        this.hp = 10;
+        this.hp = 20;
 
         this.damage = 10;
 

@@ -2,6 +2,8 @@ class Wave {
     constructor(name, startTime = 0) {
         this.name = name;
         this.startTime = startTime;
+        this.lastTime = 0;
+        this.endTime = 0;
         this.items = [];
     }
 
@@ -11,6 +13,8 @@ class Wave {
             position : position,
             time : time,
         };
+        this.lastTime = time - this.endTime;
+        this.endTime = this.lastTime + time;
 
         this.items.push(obj);
     }

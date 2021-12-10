@@ -7,7 +7,7 @@ export class BasicEnemy extends Enemy {
         this.url = '../assets/invader_5/scene.gltf';
         this.scale.set(1.5, 1.5, 1.5);
         this.name = "BasicEnemy"
-        this.speed = 5;
+        this.speed = 4;
 
         //movement
         this.maxHorizontalRange = 5;

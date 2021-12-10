@@ -19,63 +19,27 @@ class easyWorld {
     // Setup your game here
 
     constructor(canvas, sizes){
-        this.isRunning = false;
-        this.sizes = sizes;
-        this.loadManager = createLoadingManager();
-        this.camera = createCamera(sizes);
-        this.scene = createScene();
-        this.scene.name = "Main Scene"
-        setPanorama(this.scene, '../assets/spacemap/', this.loadManager);
-        this.renderer = createRenderer(canvas, sizes);
-        this.loop = new Loop(this.camera, this.scene, this.renderer);
-        const grid = new Grid(this.scene);
-        
-        grid.enable();
-        
-        //Custom Scene Variables
-        this.scene.collidableObject = [];
-        this.scene.grid = grid;
+        super(canvas, sizes);
 
-        const controls = createControls(this.camera, canvas);
         const light = createLights();
-        // const cube = createCube();
-
-        this.loop.updatables.push(controls);
-
         this.scene.add(light)
-        
 
-        // this.scene.add(cube);
-
-        const resizer = new Resizer(this.sizes, this.camera, this.renderer);
         const plane = new Plane(this.loop, this.loadManager);
-        plane.initializeModel(this.scene);
+        plane.initializeModel(this.scene).then(() => {
+            this.camera.tick = () => {
+                this.camera.position.set(plane.model.position.x, plane.model.position.y + 10,  -20)
+            }
+
+            this.loop.updatables.push(this.camera);
+        });
         this.scene.collidableObject.push(plane);
 
         const spawner = new Spawner(this.loop, grid);
         spawner.initializeModel(grid.gridSpace);
+        this.loop.updatables.push(spawner);
 
-        const wave1 = new Wave("wave1", 1000);
-        for(let i = 0; i < 10; i++) {
-            const enemy = new BasicEnemy(this.loop, this.loadManager);
-            enemy.name = enemy.name + i;
-            // spawner.spawnObject(enemy, i, 0);
-            wave1.addObject(enemy, i, 1000 * i);
-            this.scene.collidableObject.push(enemy);
-            this.loop.updatables.push(enemy);
-        }
-
-        spawner.spawnWave(wave1);
         nilai.innerHTML = score.value;
 
-        
-    }
-
-    // Render world
-
-    render(){
-        this.renderer.render(this.scene, this.camera);
-        console.log(this.renderer)
     }
 
     start(){

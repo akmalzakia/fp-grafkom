@@ -48,9 +48,9 @@ class Missile extends GameObject{
         const enemies = this.scene.collidableObject.filter((o) => o instanceof Enemy);
         const enemy = enemies.find((o) => this.isCollide(o.model))
         if(enemy){
+            this.dispose();
             enemy.takeDamage(this.damage);
             score.value++;
-            console.log('score: ', score.value);
             nilai.innerHTML = score.value;
         }
     }

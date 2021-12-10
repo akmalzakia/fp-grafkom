@@ -10,6 +10,7 @@ class Spawner extends GameObject{
         this.name = "Spawner";
         this.segmentSize = this.grid ? this.grid.divisions : 10;
         this.segments = [];
+        this.spawnQueue = [];
 
         const size = this.grid ? new Vector3(this.grid.size, this.grid.square, this.grid.square) : new Vector3(1, 1, 1);
         this.model = createBoxWireframe(size);
@@ -62,6 +63,21 @@ class Spawner extends GameObject{
         setTimeout(() => console.log(x));
     }
 
+    spawnObjectSecond(obj, second) {
+        if(obj.time === second) {
+            if(obj.position < this.segmentSize && obj.position >= 0) {
+                
+                let realPos = new Vector3(0, 0 ,0);
+                this.segments[obj.position].getWorldPosition(realPos);
+                obj.object.startPosition.set(-realPos.x, 0, -realPos.z);
+    
+                obj.object.initializeModel(this.grid ? this.grid.scene : this.scene);
+                this.spawnQueue.shift();
+            }
+        }
+        // console.log(object.time);
+    }
+
     initializeSegments() {
         const size = this.grid ? new Vector3(this.grid.size / this.grid.divisions, this.grid.square, this.grid.square) : new Vector3(1, 1, 1);
 
@@ -82,6 +98,30 @@ class Spawner extends GameObject{
     spawnerPositionToGridPosition(pos) {
         if(this.grid) {
             return new Vector3(pos.x + ((this.grid.divisions - 1) * this.grid.square / 2), pos.y, pos.z + this.grid.square * (this.grid.divisions - 1))
+        }
+    }
+
+    registerWave(wave) {
+
+        wave.items.forEach(item => {
+            item.time += wave.startTime;
+            this.spawnQueue.push(item);
+        });
+
+    }
+
+    registerObject(object, position, time) {
+        let obj = {
+            object: object,
+            position: position,
+            time: time,
+        }
+        this.spawnQueue.push(obj);
+    }
+
+    tick() {
+        if(this.spawnQueue.length != 0) {
+            this.spawnObjectSecond(this.spawnQueue[0], this.loop.second);
         }
     }
 }

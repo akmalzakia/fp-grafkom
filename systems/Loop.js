@@ -45,6 +45,7 @@ class Loop {
         this.renderer.setAnimationLoop(null);
         this.isRunning = false;
         this.clock.running = false;
+        this.lastfps_second = 0;
 
     }
 
@@ -68,12 +69,12 @@ class Loop {
         if(this.second_counter > this.fps) {
             this.second_counter = 0;
             this.second++;
-            
         }
 
+        console.log(this.second);
       
         for (const object of this.updatables){
-            object.tick(delta);
+            object.tick(del);
         }
 
         // console.log(this.updatables);

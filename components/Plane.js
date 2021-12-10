@@ -24,7 +24,7 @@ export class Plane extends GameObject{
         this.rotationSpeed = 3;
         this.minRotation = new THREE.Vector3(0, 0, THREE.Math.degToRad(-20));
         this.maxRotation = new THREE.Vector3(0, 0, THREE.Math.degToRad(20));
-        this.speed = 7;
+        this.speed = 6;
         
         // Shooting
         this.fireRate = 0.25;
@@ -72,7 +72,7 @@ export class Plane extends GameObject{
             if(this.rotation.z > 0){
                 this.rotation.z -= this.rotationSpeed * delta;
             }
-            else if(this.rotation.z < 0){
+            if(this.rotation.z < 0){
                 this.rotation.z += this.rotationSpeed * delta;
             }
         }
@@ -171,9 +171,9 @@ export class Plane extends GameObject{
 
     async invisibility() {
         this.scene.collidableObject = removeItemOnce(this.scene.collidableObject, this);
-        console.log(this.scene.collidableObject);
+        // console.log(this.scene.collidableObject);
         const flick = this.invisibilityTime / (this.invisibilityTick * 2)
-        console.log(flick);
+        // console.log(flick);
         for( let i = 0; i < flick; i++) {
             // console.log(i);
             this.model.visible = false;
@@ -182,7 +182,7 @@ export class Plane extends GameObject{
             await timeout(this.invisibilityTick);
         }
         this.scene.collidableObject.push(this);
-        console.log(this.scene.collidableObject);
+        // console.log(this.scene.collidableObject);
     }
 
     // Animation
