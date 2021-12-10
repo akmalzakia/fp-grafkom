@@ -121,7 +121,7 @@ class Spawner extends GameObject{
 
     tick() {
         if(this.spawnQueue.length != 0) {
-            this.spawnObjectSecond(this.spawnQueue[0], this.loop.second);
+            this.spawnObjectSecond(this.spawnQueue[0], Math.floor(this.loop.second));
         }
     }
 }

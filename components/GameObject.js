@@ -47,7 +47,11 @@ export class GameObject{
     async initializeModel(scene){
         if(this.url !== "") {
             this.model = await this.loadModel();
+            
         }
+        // if(this.name === "EnemyMissile") {
+        //     console.log(this.model);
+        // }
         this.scene = scene;
         this.model.scale.set(this.scale.x, this.scale.y, this.scale.z);
         this.model.position.set(this.startPosition.x, this.startPosition.y, this.startPosition.z);
@@ -70,7 +74,7 @@ export class GameObject{
 
             var bounding1 = new THREE.Box3().setFromObject(this.model)
             var bounding2 = new THREE.Box3().setFromObject(object)
-
+            
             return bounding1.intersectsBox(bounding2);
         }
 
@@ -99,7 +103,9 @@ export class GameObject{
     dispose(){
         const mdl = this.model;
         this.scene.remove(this.model);
-        this.scene.collidableObject = removeItemOnce(this.scene.collidableObject, this);
+        if(this.scene.collidableObject) {
+            this.scene.collidableObject = removeItemOnce(this.scene.collidableObject, this);
+        }
         this.model = null;
 
         // console.log('disposed');
@@ -154,6 +160,12 @@ export class GameObject{
         const gO = new GameObject(null, null, null);
         gO.setFromGameObject(this);
         return gO;
+    }
+
+    tick() {
+        if(this.helper) {
+            this.helper.update();
+        }
     }
     
 }

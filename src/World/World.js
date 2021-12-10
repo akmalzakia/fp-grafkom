@@ -2,6 +2,7 @@ import { createCamera } from "../../components/camera.js";
 import { createScene, setPanorama } from "../../components/scene.js";
 import { createRenderer } from "../../systems/renderer.js";
 import { createLoadingManager } from "../../systems/loadingManager.js";
+import { Resizer } from '../../systems/Resizer.js';
 
 import { Loop } from "../../systems/Loop.js";
 import { Grid } from "../../systems/Grid.js";
@@ -22,6 +23,7 @@ class World {
         this.loop = new Loop(this.camera, this.scene, this.renderer);
         this.grid = new Grid(this.scene);
         
+        const resizer = new Resizer(this.sizes, this.camera, this.renderer);
         this.grid.enable();
         
         //Custom Scene Variables

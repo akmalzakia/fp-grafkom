@@ -9,22 +9,16 @@ class Loop {
         this.isRunning = false;
         this.scene = scene;
         this.renderer = renderer;
-        this.clock = new Clock();
-        this.lastTime = 0;
-        this.time = 0;
         this.updatables = [];
 
         this.lastfps_second = 0;
         this.fps = 0;
         this.second = 0;
-        this.second_counter = 0;
     }
 
     // Start the loop
 
     start() {
-        this.lastTime = 0;
-        this.time = 0;
         this.renderer.setAnimationLoop(() => {
 
             this.tick();
@@ -44,7 +38,6 @@ class Loop {
         
         this.renderer.setAnimationLoop(null);
         this.isRunning = false;
-        this.clock.running = false;
         this.lastfps_second = 0;
 
     }
@@ -61,24 +54,12 @@ class Loop {
         this.lastfps_second = performance.now();
         this.fps = 1/del;
 
-        this.time += 0.01;
-        const delta = this.time - this.lastTime;
-        
-        this.second_counter += 1;
-
-        if(this.second_counter > this.fps) {
-            this.second_counter = 0;
-            this.second++;
-        }
-
-        console.log(this.second);
+        this.second += del;
       
         for (const object of this.updatables){
             object.tick(del);
         }
 
-        // console.log(this.updatables);
-        this.lastTime = this.time;
     }
 }
 

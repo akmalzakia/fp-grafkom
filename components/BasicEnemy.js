@@ -44,15 +44,14 @@ export class BasicEnemy extends Enemy {
     }
 
     tick(delta){
+        super.tick();
         if(this.model){
             this.move(delta);
             this.collidePlayer();
 
 
             // helper
-            if(this.helper){
-                this.helper.update();
-            }
+            
         }
     }
 }

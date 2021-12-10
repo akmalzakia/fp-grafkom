@@ -28,10 +28,10 @@ function main() {
     document.addEventListener('keydown', (e) => {
         if(e.key === 'Escape'){
             if(world.isRunning){
-                world.stop();
+                pause();
             }
             else{
-                world.start();
+                start();
             }
         }
 
