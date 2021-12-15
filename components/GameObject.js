@@ -157,7 +157,7 @@ export class GameObject{
     }
 
     clone() {
-        const gO = new GameObject(null, null, null);
+        const gO = new GameObject(null, null);
         gO.setFromGameObject(this);
         return gO;
     }

@@ -25,20 +25,20 @@ function main() {
     
 
     // Pause
-    document.addEventListener('keydown', (e) => {
-        if(e.key === 'Escape'){
-            if(world.isRunning){
-                pause();
-            }
-            else{
-                start();
-            }
-        }
+    // document.addEventListener('keydown', (e) => {
+    //     if(e.key === 'Escape'){
+    //         if(world.isRunning){
+    //             pause();
+    //         }
+    //         else{
+    //             start();
+    //         }
+    //     }
 
-    })
+    // })
 
     window.onblur = function() {
-        pause();
+        start();
     }
 
 

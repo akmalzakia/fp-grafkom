@@ -1,14 +1,12 @@
 import { Enemy } from "./Enemy.js";
 import { GameObject } from "./GameObject.js";
+import { Vertical } from "./move_strategy/Vertical.js";
 import { score, scoreboard, nilai} from "./score.js";
 
 class Missile extends GameObject{
     constructor(loop, loadingManager = null){
         super(loop, loadingManager);
-        this.url = '../assets/missile/scene.gltf';
-        this.scale.set(.01, .01, .01);
-        this.name = "Missile"
-        
+        this.strategy = new Vertical(this);
         //Movement
         this.speed = 20;
         this.distance = 20;
@@ -22,38 +20,33 @@ class Missile extends GameObject{
     // Movement
 
     move(delta){
-        this.model.position.z += delta * this.speed;
-        // console.log(this.model.position.z);
-        if(this.model.position.z > -this.startPosition.z + this.distance){
-            this.dispose();
-        }
+        if(this.strategy) this.strategy.move(delta);
+    }
+
+    setFromMissile(missile) {
+        super.setFromGameObject(missile);
+        this.strategy = missile.strategy;
+        this.speed = missile.speed;
+        this.distance = missile.distance;
+        this.damage = missile.damage;
+    }
+
+    clone() {
+        const missile = new Missile(null, null);
+        missile.setFromMissile(this);
+        return missile;
     }
 
     // Animation
 
     tick(delta){
         if(this.model){
+            super.tick();
             this.move(delta);
-            if(this.helper){
-                this.helper.update();
-            }
-
             this.checkEnemyCollision();
         }
     }
 
-    // Collision Detection
-
-    checkEnemyCollision(){
-        const enemies = this.scene.collidableObject.filter((o) => o instanceof Enemy);
-        const enemy = enemies.find((o) => this.isCollide(o.model))
-        if(enemy){
-            this.dispose();
-            enemy.takeDamage(this.damage);
-            score.value++;
-            nilai.innerHTML = score.value;
-        }
-    }
 
 }
 

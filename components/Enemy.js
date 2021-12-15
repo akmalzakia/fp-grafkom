@@ -18,7 +18,6 @@ class Enemy extends GameObject {
             this.takeDamage(p.damage);
             p.takeDamage(this.damage);
             score.value--;
-            // console.log('score: ', score.value);
             nilai.innerHTML = score.value;
         } 
     }

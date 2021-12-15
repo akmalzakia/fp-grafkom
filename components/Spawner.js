@@ -37,6 +37,7 @@ class Spawner extends GameObject{
             object.startPosition.set(-realPos.x, 0, -realPos.z);
 
             object.initializeModel(this.grid ? this.grid.scene : this.scene);
+            
             // console.log(object.model.position);
         }
     }

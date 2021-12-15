@@ -23,23 +23,23 @@ function main() {
     world.start();
     
 
-    // Pause
-    document.addEventListener('keydown', (e) => {
-        if(e.key === 'Escape'){
-            if(world.isRunning){
-                world.stop();
-            }
-            else{
-                world.start();
-            }
-        }
+    // // Pause
+    // document.addEventListener('keydown', (e) => {
+    //     if(e.key === 'Escape'){
+    //         if(world.isRunning){
+    //             world.stop();
+    //         }
+    //         else{
+    //             world.start();
+    //         }
+    //     }
 
-    })
+    // })
 
 
 
     window.onblur = function() {
-        pause();
+        start();
     }
 
 

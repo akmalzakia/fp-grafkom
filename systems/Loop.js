@@ -1,4 +1,5 @@
-import { Clock } from "../three/three.module.js";
+import { Vector3 } from "../three/three.module.js";
+import * as TWEEN from "../tween/tween.esm.js";
 
 // Loop class for the world loop
 
@@ -39,7 +40,6 @@ class Loop {
         this.renderer.setAnimationLoop(null);
         this.isRunning = false;
         this.lastfps_second = 0;
-
     }
 
     // Handle animated objects
@@ -53,11 +53,22 @@ class Loop {
         const del = (performance.now() - this.lastfps_second) / 1000;
         this.lastfps_second = performance.now();
         this.fps = 1/del;
-
         this.second += del;
+
+        TWEEN.update();
+
       
         for (const object of this.updatables){
             object.tick(del);
+
+            if(object.model) {
+                let constraintOffset = 1;
+                let pos = new Vector3();
+                object.model.getWorldPosition(pos);
+                if(Math.abs(pos.x) > constraintOffset + this.scene.grid.size / 2 || Math.abs(pos.z) > constraintOffset + this.scene.grid.size / 2 ) {
+                    object.dispose();
+                }
+            }
         }
 
     }

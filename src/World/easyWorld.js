@@ -8,6 +8,8 @@ import { Wave } from "../../components/Wave.js";
 import { score, scoreboard, nilai} from "../../components/score.js";
 import { BasicShooterEnemy } from "../../components/BasicShooterEnemy.js";
 import { createControls } from "../../systems/controls.js";
+import { Vector3 } from "../../three/three.module.js";
+import { BasicBoss } from "../../components/BasicBoss.js";
 
 
 class easyWorld extends World{
@@ -37,10 +39,19 @@ class easyWorld extends World{
         this.loop.updatables.push(spawner);
 
         const shootEnemy = new BasicShooterEnemy(this.loop, this.loadManager);
+        shootEnemy.addKeyframe(new Vector3(0, 0, 0), 5000);
+        shootEnemy.addKeyframe(new Vector3(10, 0, 0), 5000);
         spawner.registerObject(shootEnemy, 1, 1);
         this.scene.collidableObject.push(shootEnemy)
         this.loop.updatables.push(shootEnemy);
         shootEnemy.setTarget(plane);
+
+        // const boss = new BasicBoss(this.loop, this.loadManager);
+        // boss.addKeyframe(new Vector3(0, 0, 5), 3000);
+        // spawner.registerObject(boss, 4, 1);
+        // this.scene.collidableObject.push(boss);
+        // this.loop.updatables.push(boss);
+
         
 
 

@@ -2,6 +2,7 @@ import { removeItemOnce, timeout } from '../systems/functional.js';
 import * as THREE from '../three/three.module.js'
 import { GameObject } from './GameObject.js'
 import { Missile } from './Missile.js';
+import { PlayerMissile } from './PlayerMissile.js';
 
 export class Plane extends GameObject{
 
@@ -102,7 +103,7 @@ export class Plane extends GameObject{
 
     shoot(){
         if(this.key_press.Space){
-            const missile = new Missile(this.loop, this.loadingManager);
+            const missile = new PlayerMissile(this.loop, this.loadingManager);
             missile.startPosition.set(-this.model.position.x, -this.model.position.y, - (this.model.position.z));
             missile.initializeModel(this.scene);
             this.lastShot = this.loop.second
