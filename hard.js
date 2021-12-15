@@ -20,7 +20,7 @@ function main() {
 
 
     const world = new hardWorld(canvas, sizes);
-    world.start();
+    world.stop();
     
 
     // // Pause

@@ -43,7 +43,18 @@ class hardWorld extends World{
             this.loop.updatables.push(enemy);
         }
 
+        const wave3 = new Wave("wave3", 1);
+        for(let i = 0; i < 10; i++) {
+            const enemy = new BasicEnemy(this.loop, this.loadManager);
+            enemy.name = enemy.name + i;
+            // spawner.spawnObject(enemy, i, 0);
+            wave3.addObject(enemy, i, 1 * i);
+            this.scene.collidableObject.push(enemy);
+            this.loop.updatables.push(enemy);
+        }
+
         spawner.registerWave(wave2);
+        spawner.registerWave(wave3);
         console.log(spawner.spawnQueue);
 
         nilai.innerHTML = score.value;

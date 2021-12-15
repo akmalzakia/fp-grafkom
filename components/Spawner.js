@@ -74,6 +74,7 @@ class Spawner extends GameObject{
     
                 obj.object.initializeModel(this.grid ? this.grid.scene : this.scene);
                 this.spawnQueue.shift();
+                console.log(this.spawnQueue);
             }
         }
         // console.log(object.time);
@@ -103,19 +104,28 @@ class Spawner extends GameObject{
     }
 
     registerWave(wave) {
+        let offset = 0;
+        if(this.spawnQueue.length !== 0) {
+            offset = this.spawnQueue.at(-1).time;
+        }
 
         wave.items.forEach(item => {
-            item.time += wave.startTime;
+            item.time += wave.startTime + offset;
             this.spawnQueue.push(item);
         });
 
     }
 
     registerObject(object, position, time) {
+        let offset = 0;
+        if(this.spawnQueue.length !== 0) {
+            offset = this.spawnQueue.at(-1).time;
+        }
+
         let obj = {
             object: object,
             position: position,
-            time: time,
+            time: time + offset,
         }
         this.spawnQueue.push(obj);
     }

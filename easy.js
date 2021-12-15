@@ -21,7 +21,7 @@ function main() {
 
 
     const world = new easyWorld(canvas, sizes);
-    world.start();
+    world.stop();
     
 
     // Pause

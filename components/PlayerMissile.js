@@ -1,5 +1,6 @@
 import { Enemy } from "./Enemy.js";
 import { Missile } from "./Missile.js";
+import { score, nilai } from "./score.js";
 
 export class PlayerMissile extends Missile {
     constructor(scene, loadingManager = null) {
