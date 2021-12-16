@@ -3,12 +3,13 @@ import { Radial } from "./move_strategy/Radial.js";
 import { TweenableEnemy } from "./TweenableEnemy.js";
 
 class BasicBoss extends TweenableEnemy {
-    constructor(scene, loadingManager = null) {
-        super(scene, loadingManager)
+    constructor(loop, loadingManager = null) {
+        super(loop, loadingManager)
         this.url = '../assets/invader_1/scene.gltf';
         this.scale.set(0.2, 0.2, 0.2);
         this.name = 'Basic Boss';
         this.speed = 6;
+        this.shootStrategies = [];
         
         this.maxHorizontalRange = 3;
         this.dir = 1;
@@ -21,14 +22,7 @@ class BasicBoss extends TweenableEnemy {
     }
 
     shoot() {
-        const missile = new EnemyMissile(this.loop, this.loadingManager);
-        const radial = new Radial(missile);
-        missile.strategy = radial;
-        missile.startPosition.set(-this.model.position.x, 0, - (this.model.position.z));
-        missile.rotation.y = this.model.rotation.y;
-        missile.initializeModel(this.scene);
-        this.lastShot = this.loop.second
-        this.allowShot = false;
+        this.shootStrategies[0].handleCooldown(this.loop.second);
     }
 
     handleShoot() {
@@ -50,6 +44,11 @@ class BasicBoss extends TweenableEnemy {
             this.handleShoot();
             this.collidePlayer();
         }
+    }
+
+    dispose() {
+        super.dispose();
+        console.log('You Win');
     }
 
 }

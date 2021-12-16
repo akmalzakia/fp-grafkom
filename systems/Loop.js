@@ -62,10 +62,11 @@ class Loop {
             object.tick(del);
 
             if(object.model) {
-                let constraintOffset = 1;
+                let constraintOffset = 3;
                 let pos = new Vector3();
                 object.model.getWorldPosition(pos);
                 if(Math.abs(pos.x) > constraintOffset + this.scene.grid.size / 2 || Math.abs(pos.z) > constraintOffset + this.scene.grid.size / 2 ) {
+                    console.log(object);
                     object.dispose();
                 }
             }

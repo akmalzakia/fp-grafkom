@@ -8,9 +8,10 @@ export class BasicEnemy extends Enemy {
         this.scale.set(1.5, 1.5, 1.5);
         this.name = "BasicEnemy"
         this.speed = 4;
+        this.strategies = [];
 
         //movement
-        this.maxHorizontalRange = 5;
+        this.maxHorizontalRange = 3;
         this.dir = 1;
         this.hp = 10;
 
@@ -38,9 +39,9 @@ export class BasicEnemy extends Enemy {
     }
 
     move(delta) {
-        super.move(delta);
-        this.horizontalMove(delta);
-        this.verticalMove(delta);
+        for(const strategy of this.strategies) {
+            strategy.move(delta);
+        }
     }
 
     tick(delta){

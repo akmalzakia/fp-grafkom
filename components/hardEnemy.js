@@ -8,6 +8,7 @@ export class HardEnemy extends Enemy {
         this.scale.set(0.1, 0.1, 0.1);
         this.name = "HardEnemy"
         this.speed = 6;
+        this.strategies = [];
 
         //movement
         this.maxHorizontalRange = 3;
@@ -20,7 +21,7 @@ export class HardEnemy extends Enemy {
 
     verticalMove(delta){
         if(this.model){
-            this.model.position.z -= this.speed * delta * 0.3;
+            this.model.position.z -= this.speed * delta * this.verticalMultiplier;
             
         }
     }
@@ -38,9 +39,9 @@ export class HardEnemy extends Enemy {
     }
 
     move(delta) {
-        super.move(delta);
-        this.horizontalMove(delta);
-        this.verticalMove(delta);
+        for(const strategy of this.strategies) {
+            strategy.move(delta);
+        }
     }
 
     tick(delta){

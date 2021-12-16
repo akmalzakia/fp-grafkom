@@ -135,6 +135,10 @@ class Spawner extends GameObject{
             this.spawnObjectSecond(this.spawnQueue[0], Math.floor(this.loop.second));
         }
     }
+
+    isEmpty() {
+        return this.spawnQueue.length === 0;
+    }
 }
 
 export { Spawner }; 

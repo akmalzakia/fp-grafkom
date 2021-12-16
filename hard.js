@@ -20,26 +20,26 @@ function main() {
 
 
     const world = new hardWorld(canvas, sizes);
-    world.stop();
+    world.start();
     
 
-    // // Pause
-    // document.addEventListener('keydown', (e) => {
-    //     if(e.key === 'Escape'){
-    //         if(world.isRunning){
-    //             world.stop();
-    //         }
-    //         else{
-    //             world.start();
-    //         }
-    //     }
+    // Pause
+    document.addEventListener('keydown', (e) => {
+        if(e.key === 'Escape'){
+            if(world.isRunning){
+                pause()
+            }
+            else{
+                start()
+            }
+        }
 
-    // })
+    })
 
 
 
     window.onblur = function() {
-        start();
+        pause();
     }
 
 

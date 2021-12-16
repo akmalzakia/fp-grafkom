@@ -9,6 +9,7 @@ class Enemy extends GameObject {
         this.name = "Enemy";
         this.hp = 100;
         this.damage = 10;
+        this.verticalMultiplier = 0.3;
     }
 
     collidePlayer() {
@@ -30,10 +31,6 @@ class Enemy extends GameObject {
         if(this.hp <= 0) {
             this.dispose();
         }
-    }
-
-    move() {
-        // Constraint Movement
     }
 
 }

@@ -7,6 +7,6 @@ export class Vertical extends MoveStrategy {
     }
 
     move(delta) {
-        this.object.model.position.z += delta * this.object.speed * this.direction;
+        this.object.model.position.z += delta * this.object.speed * this.direction * (this.object.verticalMultiplier ? this.object.verticalMultiplier : 1);
     }
 }

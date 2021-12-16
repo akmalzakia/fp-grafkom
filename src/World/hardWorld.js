@@ -6,6 +6,8 @@ import { HardEnemy } from "../../components/HardEnemy.js";
 import { Spawner } from "../../components/Spawner.js";
 import { Wave } from "../../components/Wave.js";
 import { score, scoreboard, nilai} from "../../components/score.js";
+import { Horizontal } from "../../components/move_strategy/Horizontal.js";
+import { Vertical } from "../../components/move_strategy/Vertical.js";
 
 class hardWorld extends World{
     // Setup your game here
@@ -36,6 +38,13 @@ class hardWorld extends World{
         const wave2 = new Wave("wave2", 1);
         for(let i = 0; i < 10; i++) {
             const enemy = new HardEnemy(this.loop, this.loadManager);
+
+            const vertical_move = new Vertical(enemy);
+            const horizontal_move = new Horizontal(enemy);
+            vertical_move.direction = -1;
+
+            enemy.strategies.push(vertical_move);
+            enemy.strategies.push(horizontal_move);
             enemy.name = enemy.name + i;
             // spawner.spawnObject(enemy, i, 0);
             wave2.addObject(enemy, i, 1 * i);
@@ -46,8 +55,13 @@ class hardWorld extends World{
         const wave3 = new Wave("wave3", 1);
         for(let i = 0; i < 10; i++) {
             const enemy = new BasicEnemy(this.loop, this.loadManager);
+            const vertical_move = new Vertical(enemy);
+            const horizontal_move = new Horizontal(enemy);
+            vertical_move.direction = -1;
+
+            enemy.strategies.push(vertical_move);
+            enemy.strategies.push(horizontal_move);
             enemy.name = enemy.name + i;
-            // spawner.spawnObject(enemy, i, 0);
             wave3.addObject(enemy, i, 1 * i);
             this.scene.collidableObject.push(enemy);
             this.loop.updatables.push(enemy);
@@ -58,8 +72,6 @@ class hardWorld extends World{
         console.log(spawner.spawnQueue);
 
         nilai.innerHTML = score.value;
-        
-        
     }
 
     start(){

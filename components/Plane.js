@@ -201,16 +201,11 @@ export class Plane extends GameObject{
                 this.shoot();
                 
             }
-
-
-            
-
-            // console.log(this.hp);
-
-            // // remove unused missile
-            // if(this.missiles.length && !this.missiles[0].model){
-            //     this.missiles.shift();
-            // }
         }
+    }
+
+    dispose() {
+        super.dispose();
+        console.log("Game Over");
     }
 }
