@@ -48,7 +48,10 @@ class BasicBoss extends TweenableEnemy {
 
     dispose() {
         super.dispose();
-        console.log('You Win');
+        gameover.style.display = 'flex';
+        blocker.style.display = 'block';
+        instructions.style.display = 'none';
+        lose.style.display = 'none';
     }
 
 }

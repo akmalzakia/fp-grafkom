@@ -4,6 +4,7 @@ import { GameObject } from './GameObject.js'
 import { Missile } from './Missile.js';
 import { PlayerMissile } from './PlayerMissile.js';
 
+
 export class Plane extends GameObject{
 
     key_press = {
@@ -206,6 +207,9 @@ export class Plane extends GameObject{
 
     dispose() {
         super.dispose();
-        console.log("Game Over");
+        gameover.style.display = 'flex';
+        blocker.style.display = 'block';
+        instructions.style.display = 'none';
+        win.style.display = 'none';
     }
 }

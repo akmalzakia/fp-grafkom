@@ -13,6 +13,10 @@ function main() {
 
     const blocker = document.getElementById( 'blocker' );
     const instructions = document.getElementById( 'instructions' );
+    const gameover = document.getElementById('gameover');
+    const win = document.getElementById('win');
+    const lose = document.getElementById('lose');
+
 
     instructions.addEventListener( 'click', function () {
         start();
@@ -20,8 +24,10 @@ function main() {
 
 
     const world = new hardWorld(canvas, sizes);
+    gameover.style.display = 'none';
     world.start();
-    
+    // blocker2.style.display = 'none';
+    // gameover.style.display = 'none';
 
     // Pause
     document.addEventListener('keydown', (e) => {
@@ -47,13 +53,16 @@ function main() {
         world.stop();
         instructions.style.display = 'flex';
         blocker.style.display = 'block';
+        gameover.style.display = 'none';
     }
 
     function start() {
         world.start();
         instructions.style.display = 'none';
         blocker.style.display = 'none';
+        gameover.style.display = 'none';
     }
+
 }
 
 main();

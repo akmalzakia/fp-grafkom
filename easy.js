@@ -13,7 +13,11 @@ function main() {
     const canvas = document.querySelector('canvas.webgl');
 
     const blocker = document.getElementById( 'blocker' );
+    
     const instructions = document.getElementById( 'instructions' );
+    const gameover = document.getElementById('gameover');
+    const win = document.getElementById('win');
+    const lose = document.getElementById('lose');
 
     instructions.addEventListener( 'click', function () {
         start();
@@ -21,6 +25,7 @@ function main() {
 
 
     const world = new easyWorld(canvas, sizes);
+    gameover.style.display = 'none';
     world.start();
     
 
@@ -41,18 +46,20 @@ function main() {
         pause();
     }
 
-
     function pause() {
         world.stop();
         instructions.style.display = 'flex';
         blocker.style.display = 'block';
+        gameover.style.display = 'none';
     }
 
     function start() {
         world.start();
         instructions.style.display = 'none';
         blocker.style.display = 'none';
+        gameover.style.display = 'none';
     }
+
 
 
 
