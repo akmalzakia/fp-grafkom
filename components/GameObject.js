@@ -62,7 +62,7 @@ export class GameObject{
         
         this.center();
 
-        this.enableHelper();
+        // this.enableHelper();
 
         scene.add(this.model);
     }

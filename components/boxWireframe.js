@@ -9,6 +9,7 @@ function createBoxWireframe(size, color = 0xffff00) {
     line.material.opacity = 0.25;
     line.material.transparent = true;
     line.material.color = new Color(color);
+    line.visible = false;
     return line;
 }
 
