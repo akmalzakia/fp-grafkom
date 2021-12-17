@@ -104,7 +104,7 @@ body {
     position: fixed;
     display: block;
     z-index: 99;
-    padding: 3px;
+    /* padding: 3px; */
     margin: 1rem 7rem;
 }
 

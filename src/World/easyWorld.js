@@ -91,7 +91,6 @@ class easyWorld extends World{
             const horizontal_move = new Horizontal(enemy);
             vertical_move.direction = -1;
 
-
             enemy.strategies.push(vertical_move);
             enemy.strategies.push(horizontal_move);
 
