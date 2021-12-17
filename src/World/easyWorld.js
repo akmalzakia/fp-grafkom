@@ -47,7 +47,8 @@ class easyWorld extends World{
         // spawner.registerObject(shootEnemy, 1, 1);
         // this.scene.collidableObject.push(shootEnemy)
         // this.loop.updatables.push(shootEnemy);
-        // shootEnemy.setTarget(plane);    
+        // shootEnemy.setTarget(plane);   
+
 
         const boss = new BasicBoss(this.loop, this.loadManager);
         boss.setTarget(plane);
