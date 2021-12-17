@@ -8,6 +8,9 @@ import { Wave } from "../../components/Wave.js";
 import { score, scoreboard, nilai} from "../../components/score.js";
 import { Horizontal } from "../../components/move_strategy/Horizontal.js";
 import { Vertical } from "../../components/move_strategy/Vertical.js";
+import { BasicBoss } from "../../components/BasicBoss.js";
+import { Triplets } from "../../components/shoot_strategy/Triplets.js";
+import { Normal } from "../../components/shoot_strategy/Normal.js"
 
 class hardWorld extends World{
     // Setup your game here
@@ -108,10 +111,45 @@ class hardWorld extends World{
             this.loop.updatables.push(enemy);
         }
 
+        const wave6 = new Wave("wave6", 1);
+        for(let i = 5; i < 10; i++) {
+            const enemy = new HardEnemy(this.loop, this.loadManager);
+            
+            const vertical_move = new Vertical(enemy);
+            const horizontal_move = new Horizontal(enemy);
+          
+            vertical_move.direction = -1;
+
+            enemy.strategies.push(vertical_move);
+            enemy.strategies.push(horizontal_move);
+
+            enemy.name = enemy.name + i;
+            // spawner.spawnObject(enemy, i, 0);
+            wave6.addObject(enemy, i, 1 * i);
+            this.scene.collidableObject.push(enemy);
+            this.loop.updatables.push(enemy);
+        }
+
+
         spawner.registerWave(wave2);
         spawner.registerWave(wave3);
         spawner.registerWave(wave4);
         spawner.registerWave(wave5);
+
+
+        const boss = new BasicBoss(this.loop, this.loadManager);
+        boss.setTarget(plane);
+        const triplets = new Triplets(boss);
+        triplets.type = 'vertical';
+        boss.shootStrategies.push(triplets);
+        const homing = new Normal(boss);
+        homing.type = 'homing';
+        boss.shootStrategies.push(homing);
+        spawner.registerObject(boss, 1, 1);
+        spawner.registerWave(wave6);
+        this.scene.collidableObject.push(boss);
+        this.loop.updatables.push(boss);
+
         console.log(spawner.spawnQueue);
 
         nilai.innerHTML = score.value;
