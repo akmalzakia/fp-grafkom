@@ -11,6 +11,7 @@ import { createControls } from "../../systems/controls.js";
 import { Vector3 } from "../../three/three.module.js";
 import { BasicBoss } from "../../components/BasicBoss.js";
 import { Triplets } from "../../components/shoot_strategy/Triplets.js";
+import { Normal } from "../../components/shoot_strategy/Normal.js";
 
 
 class easyWorld extends World{
@@ -39,20 +40,26 @@ class easyWorld extends World{
         spawner.initializeModel(this.grid.gridSpace);
         this.loop.updatables.push(spawner);
 
-        const shootEnemy = new BasicShooterEnemy(this.loop, this.loadManager);
-        shootEnemy.addKeyframe(new Vector3(0, 0, 0), 1000);
-        shootEnemy.addKeyframe(new Vector3(10, 0, 0), 5000);
-        shootEnemy.addKeyframe(new Vector3(0, 0, 0), 5000);
-        spawner.registerObject(shootEnemy, 1, 1);
-        this.scene.collidableObject.push(shootEnemy)
-        this.loop.updatables.push(shootEnemy);
-        shootEnemy.setTarget(plane);    
+        // const shootEnemy = new BasicShooterEnemy(this.loop, this.loadManager);
+        // shootEnemy.addKeyframe(new Vector3(0, 0, 0), 1000);
+        // shootEnemy.addKeyframe(new Vector3(10, 0, 0), 5000);
+        // shootEnemy.addKeyframe(new Vector3(0, 0, 0), 5000);
+        // spawner.registerObject(shootEnemy, 1, 1);
+        // this.scene.collidableObject.push(shootEnemy)
+        // this.loop.updatables.push(shootEnemy);
+        // shootEnemy.setTarget(plane);    
 
-        // const boss = new BasicBoss(this.loop, this.loadManager);
-        // boss.shootStrategies.push(new Triplets(boss));
-        // spawner.registerObject(boss, 1, 1);
-        // this.scene.collidableObject.push(boss);
-        // this.loop.updatables.push(boss);
+        const boss = new BasicBoss(this.loop, this.loadManager);
+        boss.setTarget(plane);
+        const triplets = new Triplets(boss);
+        triplets.type = 'vertical';
+        boss.shootStrategies.push(triplets);
+        const homing = new Normal(boss);
+        homing.type = 'homing';
+        boss.shootStrategies.push(homing);
+        spawner.registerObject(boss, 1, 1);
+        this.scene.collidableObject.push(boss);
+        this.loop.updatables.push(boss);
         
 
         nilai.innerHTML = score.value;

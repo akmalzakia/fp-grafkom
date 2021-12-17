@@ -14,7 +14,7 @@ class BasicBoss extends TweenableEnemy {
         
         this.maxHorizontalRange = 3;
         this.dir = 1;
-        this.hp = 1000;
+        this.hp = 500;
 
         this.fireRate = 0.7;
         this.lastShot = 1;  
@@ -22,8 +22,25 @@ class BasicBoss extends TweenableEnemy {
         this.fireTime = 0;
     }
 
+
+    setTarget(player) {
+        this.target = player;
+    }
+
+
+    lookTarget() {
+        if(this.target.model) {
+            const dx = (this.target.model.position.x - this.model.position.x);
+            const dy = (this.target.model.position.z - this.model.position.z);
+            const angle = Math.atan2(dx, dy);
+            this.model.rotation.set(this.model.rotation.x, angle , this.model.rotation.z)
+        }
+    }
+
     shoot() {
-        this.shootStrategies[0].handleCooldown(this.loop.second);
+        for(const strategy of this.shootStrategies) {
+            strategy.handleCooldown(this.loop.second);
+        }
     }
 
     handleShoot() {
@@ -43,6 +60,7 @@ class BasicBoss extends TweenableEnemy {
         if(this.model) {
             super.tick();
             this.handleShoot();
+            this.lookTarget();
             this.collidePlayer();
         }
     }

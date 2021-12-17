@@ -3,6 +3,7 @@ export class ShootStrategy {
     constructor(object) {
         this.object = object;
         this.cd = 5;
+        this.type = 'vertical';
         this.lastTime = 0;
         this.isAvailable = true;
     }
