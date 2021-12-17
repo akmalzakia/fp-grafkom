@@ -4,7 +4,7 @@ import { Enemy } from './Enemy.js';
 class TweenableEnemy extends Enemy {
     constructor(scene, loadingManager = null) {
         super(scene, loadingManager);
-
+        this.mainTween = null;
         this.keyframes = [];
     }
 
@@ -24,6 +24,7 @@ class TweenableEnemy extends Enemy {
             }
 
             tween.start();
+            this.mainTween = tween;
         }
         
     }

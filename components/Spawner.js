@@ -65,7 +65,7 @@ class Spawner extends GameObject{
     }
 
     spawnObjectSecond(obj, second) {
-        if(obj.time === second) {
+        if(obj.time < second) {
             if(obj.position < this.segmentSize && obj.position >= 0) {
                 
                 let realPos = new Vector3(0, 0 ,0);
@@ -132,7 +132,7 @@ class Spawner extends GameObject{
 
     tick() {
         if(this.spawnQueue.length != 0) {
-            this.spawnObjectSecond(this.spawnQueue[0], Math.floor(this.loop.second));
+            this.spawnObjectSecond(this.spawnQueue[0], (this.loop.second));
         }
     }
 

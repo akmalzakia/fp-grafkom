@@ -12,6 +12,7 @@ export class BasicShooterEnemy extends TweenableEnemy {
         this.scale.set(.1, .1, .1);
         this.name = 'Basic Shooter Enemy';
         this.speed = 6;
+        this.strategies = [];
         
         this.fireRate = 0.7;
         this.lastShot = 1;  
@@ -33,6 +34,9 @@ export class BasicShooterEnemy extends TweenableEnemy {
     }
 
     move(delta) {
+        for(const strategy of this.strategies) {
+            strategy.move(delta);
+        }
         this.lookTarget();
     }
 

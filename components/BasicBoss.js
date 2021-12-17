@@ -1,4 +1,5 @@
 import { World } from "../src/World/World.js";
+import { MathUtils } from "../three/three.module.js";
 import { EnemyMissile } from "./EnemyMissile.js";
 import { Radial } from "./move_strategy/Radial.js";
 import { TweenableEnemy } from "./TweenableEnemy.js";
@@ -17,11 +18,10 @@ class BasicBoss extends TweenableEnemy {
         this.hp = 500;
 
         this.fireRate = 0.7;
-        this.lastShot = 1;  
+        this.lastShot = 1;
         this.allowShot = true;
         this.fireTime = 0;
     }
-
 
     setTarget(player) {
         this.target = player;
