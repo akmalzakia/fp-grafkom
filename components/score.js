@@ -1,5 +1,4 @@
 export let score = {
-    
     value: 0
 }
 

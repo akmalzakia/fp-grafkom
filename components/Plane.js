@@ -4,6 +4,7 @@ import * as THREE from '../three/three.module.js'
 import { GameObject } from './GameObject.js'
 import { Missile } from './Missile.js';
 import { PlayerMissile } from './PlayerMissile.js';
+import { health, healthvalue } from "./health.js";
 
 
 export class Plane extends GameObject{
@@ -37,6 +38,8 @@ export class Plane extends GameObject{
         // this.missiles = [];
 
         this.hp = 100;
+        health.value = this.hp;
+        healthvalue.innerHTML = health.value;
         this.damage = 50;
         this.invisibilityTime = 1500; //ms
         this.invisibilityTick = 150 //ms
@@ -160,6 +163,8 @@ export class Plane extends GameObject{
     // die
     takeDamage(damage) {
         this.hp -= damage;
+        health.value = this.hp;
+        healthvalue.innerHTML = health.value;
 
         if(this.hp <= 0) {
             this.dispose();

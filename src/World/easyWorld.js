@@ -40,7 +40,7 @@ class easyWorld extends World{
         this.loop.updatables.push(spawner);
 
         const shootEnemy = new BasicShooterEnemy(this.loop, this.loadManager);
-        shootEnemy.addKeyframe(new Vector3(0, 0, 0), 1000);
+        shootEnemy.addKeyframe(new Vector3(0, 0, 0), 3000);
         shootEnemy.addKeyframe(new Vector3(10, 0, 0), 5000);
         shootEnemy.addKeyframe(new Vector3(0, 0, 0), 5000);
         spawner.registerObject(shootEnemy, 1, 1);

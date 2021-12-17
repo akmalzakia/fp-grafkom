@@ -43,11 +43,13 @@ class hardWorld extends World{
             const horizontal_move = new Horizontal(enemy);
             vertical_move.direction = -1;
 
+
             enemy.strategies.push(vertical_move);
             enemy.strategies.push(horizontal_move);
+
             enemy.name = enemy.name + i;
             // spawner.spawnObject(enemy, i, 0);
-            wave2.addObject(enemy, i, 1 * i);
+            wave2.addObject(enemy, i, 3 * i);
             this.scene.collidableObject.push(enemy);
             this.loop.updatables.push(enemy);
         }
@@ -61,14 +63,55 @@ class hardWorld extends World{
 
             enemy.strategies.push(vertical_move);
             enemy.strategies.push(horizontal_move);
+
             enemy.name = enemy.name + i;
-            wave3.addObject(enemy, i, 1 * i);
+            wave3.addObject(enemy, i, 2 * i);
+            this.scene.collidableObject.push(enemy);
+            this.loop.updatables.push(enemy);
+        }
+
+        const wave4 = new Wave("wave4", 1);
+        for(let i = 0; i < 10; i++) {
+            const enemy = new HardEnemy(this.loop, this.loadManager);
+            
+            const vertical_move = new Vertical(enemy);
+            const horizontal_move = new Horizontal(enemy);
+          
+            vertical_move.direction = -1;
+
+            enemy.strategies.push(vertical_move);
+            enemy.strategies.push(horizontal_move);
+
+            enemy.name = enemy.name + i;
+            // spawner.spawnObject(enemy, i, 0);
+            wave4.addObject(enemy, i, 2 * i);
+            this.scene.collidableObject.push(enemy);
+            this.loop.updatables.push(enemy);
+        }
+
+        const wave5 = new Wave("wave5", 1);
+        for(let i = 0; i < 10; i++) {
+            const enemy = new HardEnemy(this.loop, this.loadManager);
+            
+            const vertical_move = new Vertical(enemy);
+            const horizontal_move = new Horizontal(enemy);
+          
+            vertical_move.direction = -1;
+
+            enemy.strategies.push(vertical_move);
+            enemy.strategies.push(horizontal_move);
+
+            enemy.name = enemy.name + i;
+            // spawner.spawnObject(enemy, i, 0);
+            wave5.addObject(enemy, i, 1 * i);
             this.scene.collidableObject.push(enemy);
             this.loop.updatables.push(enemy);
         }
 
         spawner.registerWave(wave2);
         spawner.registerWave(wave3);
+        spawner.registerWave(wave4);
+        spawner.registerWave(wave5);
         console.log(spawner.spawnQueue);
 
         nilai.innerHTML = score.value;

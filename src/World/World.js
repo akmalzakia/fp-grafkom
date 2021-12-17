@@ -12,7 +12,7 @@ import { Grid } from "../../systems/Grid.js";
 class World {
     // Setup your game here
     static active = null;
-
+    
     constructor(canvas, sizes){
         this.isRunning = false;
         this.sizes = sizes;
@@ -73,6 +73,7 @@ class World {
     }
 
     start(){
+        
         this.loop.start();
         this.isRunning = true;
     }
