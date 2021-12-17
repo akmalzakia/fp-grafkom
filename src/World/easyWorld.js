@@ -12,6 +12,8 @@ import { Vector3 } from "../../three/three.module.js";
 import { BasicBoss } from "../../components/BasicBoss.js";
 import { Triplets } from "../../components/shoot_strategy/Triplets.js";
 import { Normal } from "../../components/shoot_strategy/Normal.js";
+import { Horizontal } from "../../components/move_strategy/Horizontal.js";
+import { Vertical } from "../../components/move_strategy/Vertical.js";
 
 
 class easyWorld extends World{
@@ -48,7 +50,26 @@ class easyWorld extends World{
         // this.scene.collidableObject.push(shootEnemy)
         // this.loop.updatables.push(shootEnemy);
         // shootEnemy.setTarget(plane);   
+        const wave2 = new Wave("wave2", 1);
+        for(let i = 0; i < 10; i++) {
+            const enemy = new BasicEnemy(this.loop, this.loadManager);
 
+            const vertical_move = new Vertical(enemy);
+            const horizontal_move = new Horizontal(enemy);
+            vertical_move.direction = -1;
+
+
+            enemy.strategies.push(vertical_move);
+            enemy.strategies.push(horizontal_move);
+
+            enemy.name = enemy.name + i;
+            // spawner.spawnObject(enemy, i, 0);
+            wave2.addObject(enemy, i, 3 * i);
+            this.scene.collidableObject.push(enemy);
+            this.loop.updatables.push(enemy);
+        }
+
+        spawner.registerWave(wave2);
 
         const boss = new BasicBoss(this.loop, this.loadManager);
         boss.setTarget(plane);
