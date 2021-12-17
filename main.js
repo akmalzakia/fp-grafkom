@@ -1,6 +1,7 @@
 import { easyWorld } from "./src/World/easyWorld.js";
 import { hardWorld } from "./src/World/hardWorld.js";
 import { World } from "./src/World/World.js";
+import { score, nilai } from "../components/score.js";
 
 const sizes = {
     width: window.innerWidth,
@@ -14,6 +15,8 @@ const instructions = document.getElementById( 'instructions' );
 
 function start(world) {
     world.start();
+    score.value = 0;
+    nilai.innerHTML = score.value;
     instructions.style.display = 'none';
     blocker.style.display = 'none';
     gameover.style.display = 'none';
