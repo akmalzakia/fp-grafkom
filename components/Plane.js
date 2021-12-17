@@ -1,3 +1,4 @@
+import { World } from '../src/World/World.js';
 import { removeItemOnce, timeout } from '../systems/functional.js';
 import * as THREE from '../three/three.module.js'
 import { GameObject } from './GameObject.js'
@@ -207,9 +208,6 @@ export class Plane extends GameObject{
 
     dispose() {
         super.dispose();
-        gameover.style.display = 'flex';
-        blocker.style.display = 'block';
-        instructions.style.display = 'none';
-        win.style.display = 'none';
+        World.active.worldFailed();
     }
 }

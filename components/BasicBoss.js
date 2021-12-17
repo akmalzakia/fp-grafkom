@@ -1,3 +1,4 @@
+import { World } from "../src/World/World.js";
 import { EnemyMissile } from "./EnemyMissile.js";
 import { Radial } from "./move_strategy/Radial.js";
 import { TweenableEnemy } from "./TweenableEnemy.js";
@@ -48,10 +49,7 @@ class BasicBoss extends TweenableEnemy {
 
     dispose() {
         super.dispose();
-        gameover.style.display = 'flex';
-        blocker.style.display = 'block';
-        instructions.style.display = 'none';
-        lose.style.display = 'none';
+        World.active.worldSuccess();
     }
 
 }

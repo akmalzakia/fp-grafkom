@@ -9,6 +9,27 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
     <style>
+        #blocker {
+          font-family: "Courier New", monospace;
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          background-color: rgba(0, 0, 0, 0.5);
+        }
+  
+        #instructions {
+          width: 100%;
+          height: 100%;
+  
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+  
+          text-align: center;
+          font-size: 30px;
+          cursor: pointer;
+        }
       </style>
 </head>
 
@@ -19,18 +40,32 @@
             <p style="font-size:60px; font-weight:bolder;">
                 Space Invader
             </p>
+            <p id="status"></p>
             <p>
                 Pick Your Level
             </p>
             <div class="flex-column">
-                <a href="hard.html" class="btn btn-lg btn-dark p-3">Hard</a>
-                <a href="easy.html" class="btn btn-lg btn-dark p-3">Easy</a>
+                <a id="hard" class="btn btn-lg btn-dark p-3">Hard</a>
+                <a id="easy" class="btn btn-lg btn-dark p-3">Easy</a>
             </div>
         </div>
     </div>
+    <div id="gameover" style="display: none;">
+        <p id="win" style="margin-top: 10px; font-size: 60px; font-weight: bolder">Game Over! You Win</p>
+        <p id="lose" style="margin-top: 10px; font-size: 60px; font-weight: bolder">Game Over! You Lost</p>
+        <div class="flex-column">
+          <a onclick="window .location.reload();">Restart</a>
+          <a href="index.html" style="color: white; text-decoration:none">Menu</a>
+        </div>
+    </div>
+    <div id="scoreboard">
+        <div>
+          <span class="nilai"></span>
+          <div class="smalltext">Score</div>
+        </div>
+      </div>
     <canvas class="webgl"></canvas>
-    <!-- <script src="main.js" type="module"></script> -->
-
+    <script src="main.js" type="module"></script>
 </body>
 
 </html>
